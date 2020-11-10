@@ -90,7 +90,7 @@ class BloomFilter(SentenceEmbedding):
                 word = word + str(i)
                 h = hashlib.sha256(word.encode("UTF-8"))
                 p = int(h.hexdigest(), 16) % self._m
-                assert int(h.hexdigest(), 16) >= self.m
+                assert int(h.hexdigest(), 16) >= self._m
                 v[p] += 1
 
         return v
