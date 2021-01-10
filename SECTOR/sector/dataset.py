@@ -44,33 +44,33 @@ def make_dataset(data, processor, test_size=0.2, batch_shuffle_size=100):
             sentence_texts.append(text)
             topic_sequence.append(topics[topic])
 
+    train_sentences = []
+    test_sentences = []
+    train_topics = []
+    test_topics = []
+    train_text = []
+    test_text = []
 
-    # batch them so that they better resemble "real world" data - topics don't switch
-    # from sentence to sentence
     sentence_sequence = list(chunks(sentence_sequence, batch_shuffle_size))
     topic_sequence = list(chunks(topic_sequence, batch_shuffle_size))
     sentence_texts = list(chunks(sentence_texts, batch_shuffle_size))
+    for ss, ts, st in zip(sentence_sequence, topic_sequence, sentence_texts):
+        if len(ss) < batch_shuffle_size:
+            continue
 
-    train_sentences, test_sentences, train_topics, test_topics, train_text, test_text = \
-        train_test_split(
-            sentence_sequence,
-            topic_sequence,
-            sentence_texts,
-            test_size=test_size,
-            random_state=42
-    )
+        tr_sentences, te_sentences, tr_topics, te_topics, tr_text, te_text = \
+                train_test_split(ss, ts, st, test_size=test_size, random_state=42)
 
+        train_sentences.extend(tr_sentences)
+        test_sentences.extend(te_sentences)
+        train_topics.extend(tr_topics)
+        test_topics.extend(te_topics)
+        train_text.extend(tr_text)
+        test_text.extend(te_text)
 
     sentence_sequence = list(flatten(sentence_sequence))
-    train_sentences = list(flatten(train_sentences))
-    test_sentences = list(flatten(test_sentences))
-
     topic_sequence = list(flatten(topic_sequence))
-    train_topics = list(flatten(train_topics))
-    test_topics = list(flatten(test_topics))
-
-    train_text = list(flatten(train_text))
-    test_text = list(flatten(test_text))
+    sentence_texts = list(flatten(sentence_texts))
 
     print("TOTAL SENTENCES: {}".format(len(sentence_sequence)))
     sentence_sequence = tf.data.Dataset.from_tensor_slices(sentence_sequence)
@@ -93,6 +93,15 @@ with open(DATA_FILE) as f:
     parsed = (json.loads(row[1]) for row in data)
     text = (json.loads(row[2]) for row in data)
     data = tuple(zip(titles, parsed, text))
+    topics = None
+    dataset = None 
+    train_dataset = None
+    test_dataset = None
+    train_text = None
+    test_text = None
 
-    processor = embeddings.BloomFilter(5, 128)
-    topics, dataset, train_dataset, test_dataset, train_text, test_text = make_dataset(data, processor)
+def initialize_dataset_bloom(n_hash_functions, sentence_embedding_size):
+    global topics, dataset, train_dataset, test_dataset, train_text, test_text
+    processor = embeddings.BloomFilter(n_hash_functions, sentence_embedding_size)
+    datasets = make_dataset(data, processor)
+    topics, dataset, train_dataset, test_dataset, train_text, test_text = datasets

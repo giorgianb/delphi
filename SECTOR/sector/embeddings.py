@@ -7,9 +7,22 @@ import gensim.models.word2vec
 import abc
 import sklearn.decomposition
 import hashlib
+import stanza
+import nltk.corpus
 
 Word = str
 Sentence = Tuple[Word]
+STOP_WORDS = set(nltk.corpus.stopwords.words('english'))
+nlp = stanza.Pipeline('en', processors='tokenize,lemma')
+def preprocess(sentences):
+    doc = nlp(sentences)
+    sentences = [[word.lemma for word in sent.words if word.lemma not in STOP_WORDS] 
+                for sent in doc.sentences]
+
+    return sentences
+
+def vectorize(sentences, p):
+    return [p(sent) for sent in preprocess(sentences)]
 
 class Document:
     def __init__(self, sentences: Tuple[Sentence]):
