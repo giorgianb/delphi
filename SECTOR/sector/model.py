@@ -71,9 +71,9 @@ class Sector:
         self._topic_layer = tf.keras.layers.Dense(self._topic_embedding_size, activation=act)
 
         self._model = tf.keras.models.Sequential((
-            tf.keras.layers.BatchNormalization(dtype=float),
+            tf.keras.layers.LayerNormalization(dtype=float),
             self._bi_lstm,
-            tf.keras.layers.BatchNormalization(dtype=float),
+            tf.keras.layers.LayerNormalization(dtype=float),
             self._topic_layer
         ))
 

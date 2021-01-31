@@ -5,6 +5,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import numpy as np
 import model
 import dataset
+import csv
 
 BATCH_SIZE = 1         # 10 documents per batch
 DOCUMENT_SIZE = 1200     # 100 sentences per document
@@ -32,14 +33,28 @@ text = list(dataset.chunks(text, BATCH_SIZE))
 all_text = list(dataset.chunks(dataset.test_text, BATCH_SIZE))
 topic_dict = {v: k for k, v in dataset.topics.items()}
 
+wrong = []
+correct = []
+
 m.train(train, validation_data=test, epochs=100)
 for test_batch, text_batch in zip(test, text):
-    test_document = test_batch[0]
-    preds = m._model.predict(test_document)
-    print(preds.shape)
-    print(test_document.shape)
-    print(len(text_batch))
-    print(len(text_batch[0]))
-    for text_doc, pred_doc in zip(text_batch, preds):
-        for text, pred in zip(text_doc, pred_doc):
-            print("{} -> {}".format(' '.join(text), topic_dict[np.argmax(pred)]))
+    documents_batch, subjects_batch = test_batch
+    subjects_p_batch = np.argmax(m._model.predict(documents_batch), axis=-1)
+    minibatches = zip(text_batch, subjects_batch, subjects_p_batch)
+    for text_minibatch, subjects_minibatch, subjects_p_minibatch in minibatches:
+        features = zip(text_minibatch, subjects_minibatch, subjects_p_minibatch)
+        for text, subject, subject_p in features:
+            print(f"'{text}' -> {topic_dict[subject_p]}")
+            if subject != subject_p:
+                wrong.append((text, subject, subject_p))
+            else:
+                correct.append((text, subject, subject_p))
+
+with open('wrong.csv', 'w') as f:
+    fout = csv.writer(f)
+    fout.writerows(wrong)
+
+with open('correct.csv', 'w') as f:
+    fout = csv.writer(f)
+    fout.writerows(correct)
+
