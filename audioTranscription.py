@@ -1,5 +1,8 @@
+# DON'T USE THIS FILE!
+
 def transcribe_file(speech_file):
-    """Transcribe the given audio file asynchronously."""
+    # """Transcribe the given audio file asynchronously."""
+    print("Before Imports")
     from google.cloud import speech
 
     client = speech.SpeechClient()
@@ -14,9 +17,12 @@ def transcribe_file(speech_file):
         language_code="en-US",
     )
 
+    # [START speech_python_migration_async_response
     operation = client.long_running_recognize(
         request={"config": config, "audio": audio}
     )
+
+    operation = client.long_running_recognize(config=config, audio=audio)
 
     print("Waiting for operation to complete...")
     response = operation.result(timeout=90)
@@ -27,3 +33,8 @@ def transcribe_file(speech_file):
         # The first alternative is the most likely one for this portion.
         print(u"Transcript: {}".format(result.alternatives[0].transcript))
         print("Confidence: {}".format(result.alternatives[0].confidence))
+
+
+f = open("./output.raw", "r")
+transcribe_file(f)
+f.close()
