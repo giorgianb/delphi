@@ -1,0 +1,129 @@
+Test1003.wav
+cancel that start with a reverse bias which we saw last time they saw we have a PO you have it here diagram of a PN Junction which is reverse by so the voltage applied is called VR4 reverse bias and in this picture you can see the size of the depletion region is like symmetrical is equal in the region if you remember this point is just we call this point this is 0x equal to zero that's the interface between the p and the Androgen that's the metallurgical interface this point is - XP this edge of the depletion region in the P side and the other edges xn so in this picture but it seems X energy CO2 XP which indicates you remember from last time that means the doping is roughly the same if they are the same but that's only for this case
+
+Test1004.wav
+
+
+Test1005.wav
+spice we're playing a positive voltage to the not exactly positive are applying a higher voltage to the end region compare to the. So what happens is because that's about it but if you look at the energy bang energy electrons have negative
+
+Test1006.wav
+he's just a dumb and you shift EC again but if it's done properly shift them by of course he has to shift also here because
+
+Test1007.wav
+the chart the space charge region has to become wider to accommodate that voltage so which means xnxp become larger so
+
+Test1008.wav
+
+
+Test1009.wav
+queso queso now we have a voltage applied we are his Services zero here so the Bolton BR and then so we know that the space charge region will increase so this with you will increase and that's xp80 and then electric feel the same as before
+
+Test1010.wav
+which occurs at x equal to zero. Peak electric field being are so that's where you have the peak electric field let me call D-Max so Emax to find a Max of if you remember when we derive the expression for the electric 
+field
+
+Test1011.wav
+
+
+Test1012.wav
+so basically this here the integral of the electric field is this area of the what's that area that's basically triangle so the area is the width times the height but what's the height see Max 2
+
+Test1013.wav
+he's also you changing what you're changing the charge inside because the charge so for example let me put the charge here you know in the end region is charges positive in the depletion region is positive
+
+Test1014.wav
+PN Junction behave like a pastor and that's a pastor we call a junction capaz because it we should appear in Junction an expression for the junction capacitance and area like that we have these two plates here and they're separated by distance D and the material inside has some dielectric constant so if you have something like this and then the distance between
+
+Test1015.wav
+then we can use that same expression see is Absalom Absalom electric constant of the material between the two plates in this case and then becomes W cuz that's the spacing between the two plates and the area Okay in this picture the area is this here right now it's not showing but basically the cross section area
+
+Test1016.wav
+so so what's I know the charge he is positive
+
+Test1017.wav
+so basically you you're at so you can as you increase VR which is what you doing pushing the X and higher larger like this and that exposes more charges so you adding more child so that's why I Q increase and the same 
+thing happens on the other side you would increase and you add negative charge so mine is q and also increase so that's a that's a behavior like a pastor Pastor CJ so
+
+Test1018.wav
+Russian W into here and that's what you get so he is called c-prime SOC Prime is the same as CJ and that's you get this expression for the capacity so then we have two cases of one-sided either and I is much higher than ND or the other way and do you much higher than anything so we have two cases of one-sided Junction let me consider one case which is when an a much higher than ending
+
+Test1019.wav
+
+
+Test1020.wav
+compare the doping NH Randy you can say that it is roughly equal to Andy and the way you know that because the width of the space charge region XP here and they look roughly the same they look in this picture from that I know the doping are roughly the same the same but suppose I consider this case now what do we know we know that that will no longer be the case so ask then we'll be different from XP and actually should go back to the Expressions you will see that if you increase at soapy + means and his large increase increase
+
+Test1021.wav
+use this assumption that na is much higher than ND you can see you end up with this here we X-Men and that's what we're doing here so you end up with w and then
+
+Test1022.wav
+a very high and you can determine the other one next year so that's what was showing out so that so let me write 1 / CJ Fashion Square
+
+Test1023.wav
+guess what that's shown in the next light okay so here again so already discuss the left hand side picture which shows the Char this just illustrates that XP is much more than X mansion in the.
+
+Test1024.wav
+response to 1 / c-prime Square equal to zero equation of the line and you said one over CJ Square to zero. Means for that to be zero which means we are is equal to - B B I got the right hand side VR is mine so I know the intersection point we are is minus BDI so then by measuring
+
+Test1025.wav
+what's happened to electron the same thing happens to hold this description applies to hold just four houses like everything is so you need to look at the energy and for the for hoes definition of forward by
+
+Test1026.wav
+electric field points from plastic so that's the internal electric see call that internals and then you have external electric field caused by the voltage VA
+
+Test1027.wav
+34 spice except it's just the opposite so let me go back to the reverse bias what you did so the difference is DVR
+
+Test1028.wav
+let's go back to forward bias the same thing happens except now when is forward biased imagine you fix the peace sign so you expect to get smaller now and you can see from here the berry height would be e x BBI - behind cuz now would be smaller
+
+Test1029.wav
+so what is forward biased that means the voltage of the peace sign is higher than the inside and what happens if the berry height is reduced and again it's a very high does reduce you make it easier for electrons and holes to diffuse because you reduce the barrier so electrons diffuse from entropy how's the fuse from P to end which means that card because you have now diffuser and the and the current which way is the current is Flowing so the current forward bias somewhat smaller
+
+Test1030.wav
+guess what that's the queso I mean the next step is to find this espresso next thing is to find the car the expression for this current so I know the currents found this way in terms of the voltage Supply in terms of the VA so the current is so again why they are they look like that you have more clothes to the lowest energy for housing to move down as you move.
+
+Test1031.wav
+right now I don't have any but let me add more home safe I have holes I have something like this would be able to diffuse and they will defuse this way
+
+Test1032.wav
+okay so that they're they're not even moving if you remember if it's due to an electric field that's just so then where is the other one is here but exactly the same you have to flowers and they cancel now she
+
+Test1033.wav
+Immortals can refuse you have now in net diffusion of holes from people and when this year holds the fuse from P to end an electron philanthropy it's because of that the whole is the sum of drift JP drift + JP diffusion and the same thing that the expression for adrift is simply is a proportion to the electric field so4j Pedro
+
+Test1034.wav
+420 means that JP drift is - JP diffusion which you mentioned before the drift cancel the diffusion that's why they and the same thing for n j and Jeff is my Estrella and issue so that's PN Junction
+
+Test1035.wav
+because you could have the dope because in reality in the Dolphins most likely it's hard to change immediately 0 to change from a abruptly it would be more like gradual so for example in the text with you see Scott graded PN Junction
+
+Test1036.wav
+okay so that the depletion region is this so we're staying where it for now will assume no recombination generation later on we'll come back to this and when added as non ideolity we have two sides do in the Baltic region where some electric field is zero but actually not only that
+
+Test1037.wav
+that's the case that means you're not at steady-state you didn't reach steady-state the current so the car just cost them everywhere the other way is simpler whatever carrier is coming in from the region from the left 
+hand side they should come out from the other side so this should be otherwise drift diffusion
+
+Test1038.wav
+the point is you can see here we like to see this related to Roar the charge-density so and Roy's are related to basically the charges of antenna and peeks social changing an NP the shark could change Roku change so you have to update the electric field that's called self-consistent so I should to be exactly have to also solve an equation but here's a mention we actually neglect neglect the main current which is appropriate for the 
+PN Junction
+
+Test1039.wav
+like this but I apply for advice if you remember the barrier become smaller so that's why that's what's causing These Hoes to be to diffuse now they are able to diffuse and so that we call this inject injection syringe to the other side so now you're adding home to the end read so so the destiny of those holes this Dusty hole so you distinguish the two how do you distinguish between holes in the end region and house in the. So the way we do that we add subscript so if we are in the end we say
+
+Test1040.wav
+subscript is different from the symbol that means it's minority carrier after they are injected so then we need to look at
+
+Test1041.wav
+cause of the holes to diffuse to the other side or be injected in the Android because you have more of them
+
+Test1042.wav
+second equation just expression of the car the only thing is we removed the drift because I remember one of the Assumption is we are still the electric field is zero for minority carrier so there is no different only diffusion and finally this is just definition of that again and I do the same thing
+
+Test1043.wav
+once you do that almost done then after that you can add the to J&J tea and that's the total car so any questions
+
+Test1044.wav
+where is right now okay do you want

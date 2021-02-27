@@ -15,10 +15,13 @@ for fn in filenames:
     # print(fn)
     # print(n)
     r = sr.Recognizer()
-    with sr.AudioFile(n) as source:
-        audio = r.record(source)
-        print("\n"+fn)
-        print(r.recognize_google(audio, language="en-US"))
+    try:
+        with sr.AudioFile(n) as source:
+            audio = r.record(source)
+            print("\n"+fn)
+            print(r.recognize_google(audio, language="en-US"))
+    except sr.UnknownValueError as e:
+        print(e)
 
 # print(filename)
 # d = 120
