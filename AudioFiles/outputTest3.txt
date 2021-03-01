@@ -1,0 +1,1247 @@
+Test3000.wav
+Transcript: hello
+
+Test3004.wav
+Transcript: hello everyone
+
+Test3004.wav
+Transcript:  so we continue this lecture will continue the PN Junction so last time you consider mainly the equilibrium the PN Junction on the thermal equilibrium let me first share the slides so I already posted the slides they should be in Blackboard on the documents
+
+Test3005.wav
+Transcript: okay so I assume you can see the my slide so I just said in today's lecture I would cover
+
+Test3005.wav
+Transcript: for the other PN Junction will look at both reverse and forward bias and you will see how you can draw the energy band diagram of these two cases
+
+Test3005.wav
+Transcript:  I'm basically what happens and then we'll try to derive the current voltage characteristics
+
+Test3006.wav
+Transcript: cancel that start with the reverse bias
+
+Test3006.wav
+Transcript:  which we saw last time
+
+Test3006.wav
+Transcript:  they're so we have a PO you have a here diagram of a PN Junction which is reverse bias so the voltage applied is called VR4 reverse bias and in this picture you can see the size of the depletion region
+
+Test3006.wav
+Transcript:  Alexa symmetrical is equal in the region if you remember this point is
+
+Test3006.wav
+Transcript:  guess what we call this point this is 0x equal to zero that's the interface between the p and the and region that's the metallurgical interface this point is -8
+
+Test3007.wav
+Transcript: see this edge of the depletion region in the P side and the other edges xn
+
+Test3007.wav
+Transcript:  so in this picture the it seems X and is equal to x p which indicates you remember from last time that means the doping is roughly the same if they are equal to doping would be the same but that's only for this case okay so here we have a voltage BR and BR as you can see the place is to the end - to the piece with me of the voltage of the ant is higher than the p
+
+Test3007.wav
+Transcript:  okay so that's reverse bias and that's known equilibrium so here let's see how you draw what will happen to the energy band diagram under the stairs
+
+Test3007.wav
+Transcript:  okay so we saw last time that the energy band diagram
+
+Test3007.wav
+Transcript:  first let me I'll draw Tundra
+
+Test3007.wav
+Transcript:  thermal equilibrium first let's start
+
+Test3008.wav
+Transcript: so if you remember thermal equilibrium the Fermi energy is constant and then you extend the address of the space charge region of the depletion region
+
+Test3008.wav
+Transcript:  that's the metallurgical interface and then you draw the energy band diagram in the outside of the space charge region outside of the depletion region and you do that for both sides of the P the bumpy bark and the N box so she remember for the p-block I know the Fermi energies I know f is higher than e f
+
+Test3008.wav
+Transcript:  and the same thing for the other side of the other side the end region I know TF is higher than EFI as I said in this example here is roughly the same should be the same distance because the doping looks roughly the same and they looks equal to Andy soda
+
+Test3009.wav
+Transcript: EFI in dash light and then once you draw a face easy you just move up by half the Vanguard that's EG and down by half the band guy that said I'm sorry that's easy and that Evie the banister and you do the same thing the other side so that's easy. Sebi and then he just connect easy smoothie and you connect TV so if fish is drawn properly you can see from this picture is she should be parallel to Evie is that so if I shift easy down and I put it on top of Eevee it should be the same and the same thing for EFI should be parallel to the other two okay so that's what you were sold last time and if you remember the this is called the Barre 
+height so the difference the same EC between the two aunts that's the Barre height
+
+Test3010.wav
+Transcript: that's evdi
+
+Test3010.wav
+Transcript:  is so that's under thermal equilibrium now when you in like in this picture this is reverse bias so reverse biased we're playing a positive voltage to the not exactly positive are applying high voltage to 
+the end region compare to the. So what happens is because that's about but if you look at the energy band diagram is energy so basically there is a minus sign because electrons have negative charge on this all before for example if you look at the energy band diagram look at EC to get the vote if you Flip PC and if you remember that's because of the minus sign my GE has a negative charge so so the point is if I apply a positive voltage or higher voltage at the end
+
+Test3010.wav
+Transcript:  in terms of energy that's actually would lower the energy in the end side so if you apply pause the voltage or higher won't you lower the the office
+
+Test3011.wav
+Transcript: it would lower the energy
+
+Test3011.wav
+Transcript:  so now I will draw in maybe in red what happens when it's reverse bias
+
+Test3011.wav
+Transcript:  okay so Wednesday verse bias the Fermi energy is no longer constant so that's very important
+
+Test3011.wav
+Transcript:  so as soon as you apply a voltage the Fermi energy is not constant so what happens is to the all the energies you see on the right hand side of the end region in the end bulk region do those all those energies with shift down so for example TV shifts down to here
+
+Test3011.wav
+Transcript:  and the amount of shift what determines the amount of shift is the voltage do you apply swing this case we are playing VR so this change here this amount of shift
+
+Test3011.wav
+Transcript:  is EVR
+
+Test3012.wav
+Transcript: so so that's Evie so if he becomes like that and then what happens if all the other energy is also shift down by the same amount so you do the same thing for EFI it's just a dumb
+
+Test3012.wav
+Transcript:  and you Shifty see you again but if it's done properly shift them by of course he has to shift also so here also.
+
+Test3012.wav
+Transcript:  Cuz that's the location of only by the door book and the doping in the end region will not changing that the Vulcan doesn't affect the dog so he s the distance between Earth and the EC has to remain constant so here I drew free energy in read those r e c e f i
+
+Test3012.wav
+Transcript:  an Eevee with the applied voltage be are and they're like that so here I'm assuming this I'm assuming there left hand side the peace pipe
+
+Test3013.wav
+Transcript: again that's like a reference so we can fix that and I move shift right hand side the end region down by EVR by e x the voltage and then reconnect the
+
+Test3013.wav
+Transcript:  Smoothie all the energy level so like this okay so
+
+Test3013.wav
+Transcript:  so you can see that what happened what happened to the barrier you can see now the new barrier is this
+
+Test3013.wav
+Transcript:  so it's no longer evdi so you see the new Berea in red its evdi
+
+Test3013.wav
+Transcript:  Celine Dion
+
+Test3013.wav
+Transcript:  Dustin Newberry height
+
+Test3013.wav
+Transcript:  sweet pea
+
+Test3013.wav
+Transcript:  bdiplus we are so what does that mean it means now the total voltage is the sum DBI + br
+
+Test3014.wav
+Transcript: so the voltage was increased
+
+Test3014.wav
+Transcript:  so if the voltage increases
+
+Test3014.wav
+Transcript:  what does it mean that Walter has to be accommodated by the chart inside the PN Junction which the voltage increases the charge the charge the space charge region has become wider to accommodate that voltage so which means xnxp become larger
+
+Test3014.wav
+Transcript:  so so now let me discuss what happens to xnxp by the said we know that they would become larger not for the expressions of xnxp we arrived last night so I don't have the money but we derive the last time so I can use the same expression the only thing that changes now you have so you have the these are the expressions with arrived last time except
+
+Test3015.wav
+Transcript: last time you had only be bi so in all of these Expressions the expressions xnxc and W which is the total which we had inside DVI to Epsilon sedi so the only change you need to make is now the voltage is not vbr it's vdi + BR that's the only change
+
+Test3015.wav
+Transcript:  so these are the expression for the space charge region which when you apply a voltage Reverse by
+
+Test3015.wav
+Transcript:  so you can see that what happened so far. Look at any more XP or W if you increase the reverse bias ply or reverse bias One Bowl that will increase the XP and Excel NW so all of them will increase and if I increase the voltage further it would make it wider it will increase the space child reader
+
+Test3015.wav
+Transcript:  Bissell that's one thing so the space charge region will increase with a reverse bias
+
+Test3016.wav
+Transcript: that's one thing thing that happens they are things that happens which already mentioned the berry height increases so the berry height is this one in red leave the e x BBI plus we are the Newbery height for Electra
+
+Test3016.wav
+Transcript:  so that's better than the berry height increases for a when a junction is reverse diet
+
+Test3016.wav
+Transcript:  and the other thing is the electric field will increase again we saw that before. If you look at the top picture you like to feel increases because you're adding an external electric field which is the airplane ride to the internal so she have two arrows pointing from the plus to the minus those are the first the arrow inside is be internally like to see that's the one we start at the equilibrium and then the external is caused by VR but you can see both are in the same direction so then he like to feed will increase
+
+Test3017.wav
+Transcript: so then just summarize when is when a PN Junction is reverse bias space charge region becomes wider so XNX p&w all of them increase and the electric field also will increase
+
+Test3017.wav
+Transcript:  and the voltage the berry height with increased so all of these will increase
+
+Test3017.wav
+Transcript:  socio
+
+Test3017.wav
+Transcript:  so I never said the expressions for XNNX p&w are the same except you change the voltage to the new voltage bdiplus we are
+
+Test3017.wav
+Transcript:  let me know of
+
+Test3017.wav
+Transcript:  so that's the Energy electric
+
+Test3018.wav
+Transcript: I want to see
+
+Test3018.wav
+Transcript:  cancel
+
+Test3018.wav
+Transcript:  play so now we have a voltage applied we are
+
+Test3018.wav
+Transcript:  if I assume this is zero here so the voltage be our and then so we know that the space charge region will increase so this with you
+
+Test3019.wav
+Transcript: please
+
+Test3019.wav
+Transcript:  what's next NSX P that's zero and then so for example Electric Feel
+
+Test3019.wav
+Transcript:  is the same as before we derive last time the electric electric electric field across the PN Junction so this is normally we label this x x across the PN Junction outside in 00 and then inside
+
+Test3019.wav
+Transcript:  whether it's negative is negative and it's actually a straight line so it would be the same as before the only thing is so slow electric feel that reason the straight-line reason doesn't change if you go back to the expression we derive the slope is only a function of the doping and
+
+Test3020.wav
+Transcript: and as I said the door is not changing supposed to do for me is not change then the slopes are the same but he wasn't but then we have a wider xnxp so that means this is Patrick Shields here would be larger we said overall the electric and the peak electric field which occurs at x equal to zero
+
+Test3020.wav
+Transcript:  that Peak electric field would be an honor
+
+Test3020.wav
+Transcript:  okay so this point here that's where you have the peak electric field let me call D-Max
+
+Test3020.wav
+Transcript:  Alexis so that will increase with with Walter if I keep increasing VR that elect emacs will increase
+
+Test3020.wav
+Transcript:  so so let's try to find emacs
+
+Test3020.wav
+Transcript:  soap to find a Max of if you remember when we derive the expression for the electric field meteorologist
+
+Test3021.wav
+Transcript: under two cases first in the peace sign from minus xp20 and then from 0 to x 10 and then what we did is we we said from continuiti
+
+Test3021.wav
+Transcript:  we have to satisfy e 0 - equal to e 0 +
+
+Test3021.wav
+Transcript:  so we did this last time 0 - that's the continue with you so that's what you see here
+
+Test3021.wav
+Transcript:  I have two expressions there one of them is from basically 0 - so that's a hat in the Destin that. That's why you have an A and x p and the other one is in the end side easier + e n d
+
+Test3021.wav
+Transcript:  over Absalon xn
+
+Test3021.wav
+Transcript:  not you
+
+Test3022.wav
+Transcript: play one week with you this here and
+
+Test3022.wav
+Transcript:  from that you can see we got this property Hill relation we got this anime
+
+Test3022.wav
+Transcript:  this is what we did last time
+
+Test3022.wav
+Transcript:  but now we're just we're not interested in that we're interested in finding this I know they like to treat is maximal at zero I want to find it at that. I think she's so then I can use either expression -10 / Epson XP or the other one you will get the same ass and then he just stopped in to the expression so here I think it doesn't matter for example let's pick the first one minus DNA over Epson XP
+
+Test3022.wav
+Transcript:  any question
+
+Test3023.wav
+Transcript: okay so so she go back to the extraction for XP
+
+Test3023.wav
+Transcript:  that's this one here in the middle so you just stop to do this expression XP
+
+Test3023.wav
+Transcript:  in to hear - e n a x 9 director 3.0 which is Emax is given by this - 2 - and then you have to Evo plus VR over Epsom on S & M A N D R / NFL standing on the square root of that that's important we'll come back to this later on north parking today's lecture but later when we discuss the breakdown
+
+Test3023.wav
+Transcript:  so the other way to ride the peak electric field is list
+
+Test3023.wav
+Transcript:  you should go back to the this picture here
+
+Test3023.wav
+Transcript:  I know the total voltage
+
+Test3024.wav
+Transcript: so I know the total voltage
+
+Test3024.wav
+Transcript:  is r e v i s e r s match so the volt is now is BVI + PR but the voltage again we saw this last time we tried the VX voltage as a function of X so basically this here
+
+Test3024.wav
+Transcript:  the interior of the electric field is this area
+
+Test3024.wav
+Transcript:  what's that area that's basically a triangle so the area is the width
+
+Test3024.wav
+Transcript:  times the height
+
+Test3024.wav
+Transcript:  she's this but what's the height it's Emax in magnitude don't need to worry about the minus signs so I'm assuming it's positive so max / 2
+
+Test3025.wav
+Transcript: just the area of a triangle so from so is here I just wrote the voltage the total voltage is the integral of Electric Sheep
+
+Test3025.wav
+Transcript:  now I can solve for E-maxx
+
+Test3025.wav
+Transcript:  I'll get to
+
+Test3025.wav
+Transcript:  vbi class B R
+
+Test3025.wav
+Transcript:  over w
+
+Test3025.wav
+Transcript:  okay so that's I'm done here if you stop to do W by this expression the last one here you'll get the same answer as this one here as Max we found you
+
+Test3025.wav
+Transcript:  okay so that's how we we get this expression the last one Emax is - again just add - because us to DVI plus we are over. That's how you get that is simply from here
+
+Test3025.wav
+Transcript:  guess what that's the peak electric field in the PN Junction when it's reverse bias
+
+Test3026.wav
+Transcript: so now the other thing is so what we notes when the PN Junction is reverse biased
+
+Test3026.wav
+Transcript:  by changing the voltage br
+
+Test3026.wav
+Transcript:  that's why you're changing the width of the space charge region you changing X NXT which means you're changing W okay so that's so by changing the voltage you changing the width of the space charge region 
+which means also you changing what you changing the charger inside because the charge so for example let me put the charge here knowing the end regions charge is positive and B in the depletion region is positive and negative again that's due to the ionized owners in the Androgen receptors in the. Are equal in magnitude
+
+Test3026.wav
+Transcript:  if I call this charge you discharge.
+
+Test3027.wav
+Transcript: okay so here you see we have internally in the space charge region we have charged you in the end region and charred - Q in the. And they are equal in magnitude but the charge is a function of the voltage BR if I increase VR increase xnxp which means you will increase
+
+Test3027.wav
+Transcript:  so then the effect is this by changing the are so as
+
+Test3027.wav
+Transcript:  PR increases W increases
+
+Test3027.wav
+Transcript:  which I which means that you in the station to charge you increases but then if you so what's the conclusion here changing the voltage and that is changing the charge
+
+Test3027.wav
+Transcript:  that behavior is big is a capacitor
+
+Test3028.wav
+Transcript: cuz again you know the relation in a catastrophe is this so what what does that mean
+
+Test3028.wav
+Transcript:  Selena capacity-based you what you do is
+
+Test3028.wav
+Transcript:  you at the field change the voltage you change the chart that's a kielbasa and that's what we noticed here inside the PN Junction we are we change the amount of Charter the PN Junction behave like a capacitor
+
+Test3028.wav
+Transcript:  and that's a pasta we caught a junction capaz because it we should the PN Junction
+
+Test3028.wav
+Transcript:  so now the next thing is how do you find an expression for them. Junction capacitance
+
+Test3028.wav
+Transcript:  so to find an expression for that you treat so this is not exactly like a conventional capacitor so she have a regular or conventional capacitor
+
+Test3028.wav
+Transcript:  it looks like this it's a
+
+Test3029.wav
+Transcript: it's normally a two plate capacitor
+
+Test3029.wav
+Transcript:  she's a conventional capacitors we have two plates
+
+Test3029.wav
+Transcript:  and they are separated by some distance let me call Daddy
+
+Test3029.wav
+Transcript:  and I say each plate has some cross section area like that case we have these two plates here and they are separated by distance D and the material inside has some dielectric constant
+
+Test3029.wav
+Transcript:  if you have something like this the capacitance Absalon the cross-section area
+
+Test3029.wav
+Transcript:  which is this area here
+
+Test3029.wav
+Transcript:  over the spacing of the two plates
+
+Test3029.wav
+Transcript:  rs-422 play capaz what we have here the PN Junction is not exactly like that but we can model it as a two plate capacitor so the way we model it is this
+
+Test3030.wav
+Transcript: Retreat so we do this
+
+Test3030.wav
+Transcript:  we pick one edge of the space charge region at the plate think about this is one play the other one is the other plate
+
+Test3030.wav
+Transcript:  and then the distance between them is here we call a w so the distance between the two places W as you can see here it's called W so then and then we can use that same expression C
+
+Test3030.wav
+Transcript:  is Absalom Absalom Absalom represents the dielectric constant of the material between the two plates in this case the material semiconductor so that becomes Epsilon pass
+
+Test3030.wav
+Transcript:  and then D becomes W cuz that's the space in between the two plates and the area Okay in this picture the area is this here right now it's not showing but they ski
+
+Test3031.wav
+Transcript: the cross-section area is this
+
+Test3031.wav
+Transcript:  DC the cross-section area
+
+Test3031.wav
+Transcript:  ignore me is it you see what we do is
+
+Test3031.wav
+Transcript:  we divided by the area we normalize by The Cross by the area and we end up with a cup then the capacitors would be just Epsilon over there with the fastest CJ The Junction Kakashi okay so that's what you see here
+
+Test3031.wav
+Transcript:  Mercer Lane charge increases as we increase the voltage
+
+Test3031.wav
+Transcript:  okay
+
+Test3031.wav
+Transcript:  so when we increase the voltage
+
+Test3031.wav
+Transcript:  can let me draw a different picture
+
+Test3032.wav
+Transcript: queso enemy
+
+Test3032.wav
+Transcript:  okay so let's say this is the case under some hole to certain Bolton BR less equal to one okay again this either. Listen to the end and you have a dokkan here which is constant and do you hear
+
+Test3032.wav
+Transcript:  so so what's going to happen when I know the charge he is positive
+
+Test3032.wav
+Transcript:  sorry. I guess we can't say the next slide going to see this yes yes yes yes right now and I can't afford it
+
+Test3033.wav
+Transcript: I think the let me see ya this okay how about now you see the I drew and region and that space child-rearing from from 0 to XM so what's the amount of space key I know the doping is Andy so if I say it was 
+so completely ionized ation the charger this DND it's actually just end but that's if you want to talk about this right now has a unit per centimeter Cube if you want the extra charge I have to do this and e x n x the 
+cross-section area
+
+Test3033.wav
+Transcript: okay you see this is the volume so we cancel the volume and becomes charged so that's the charge
+
+Test3034.wav
+Transcript: right now this chart here Q is equal to that
+
+Test3034.wav
+Transcript:  if I if I increase the voltage VR so if I apply a voltage BR here
+
+Test3034.wav
+Transcript:  if I increase the voltage the effect of that so svr increases
+
+Test3034.wav
+Transcript:  in this case and will increase
+
+Test3034.wav
+Transcript:  so if you put backpacks and here you can see the charge would increase everything else doesn't change is constant and these constant a cross-section is not the only thing that change is the witch xn       
+
+Test3034.wav
+Transcript:  so basically you you're at so you can as you increase VR which is what you doing
+
+Test3034.wav
+Transcript:  increasing pushing the X and higher nausea like this and that exposes more charges so you adding more charges and staying right here so that's why i q and increase
+
+Test3035.wav
+Transcript: and the same thing happens on the other side you would increase and you add negative charge so mine is q and also increase
+
+Test3035.wav
+Transcript:  they're so that's the so that's a that's a behavior of a capacitor and as I said we call that capacitor CJ
+
+Test3035.wav
+Transcript:  so
+
+Test3035.wav
+Transcript:  CJ
+
+Test3035.wav
+Transcript:  I think that's
+
+Test3035.wav
+Transcript:  Epsilon
+
+Test3035.wav
+Transcript:  semiconductor over the wits okay so we remove the area Bird versus music
+
+Test3036.wav
+Transcript: so we don't need to worry about the okay so that's expression for the we know an expression for w again we discussed that before this one here last one that's the expression of w that's the total width of the space charge region with any voltage applied voltage br
+
+Test3036.wav
+Transcript:  okay so here we are. We are even though it's Reverse by us that we are as possible
+
+Test3036.wav
+Transcript:  positive number so he stops to that expression W into here
+
+Test3036.wav
+Transcript:  and that's what you get so he is called c-prime SOC Prime is the same as CJ and that you got this expression for the fastest in a PN Junction
+
+Test3037.wav
+Transcript: if you look at this see how it depends on the vocal for example if you increase BR increase the reverse bias you can sit you see that. You become smaller
+
+Test3037.wav
+Transcript:  you see from here and that's simply because you when you please be are you increase the spacing between the two plates and the capacitor is inversely proportional to space today so that's why the capacitor become smaller
+
+Test3037.wav
+Transcript:  the next thing is let's let's look at this just look at the junction capacitance under special case we call that one-sided Junction just the first let me Define what we mean by one-sided Junction
+
+Test3037.wav
+Transcript:  okay so one side The Junction basically refers to
+
+Test3038.wav
+Transcript: to the dokkan n i n n d means one side you could be an RP that has much higher than the other one so then we have two cases of one-sided either and there is much higher than ND or the other way and do you much higher than na so we have two cases of one-sided Junction let me consider one case which is when an a
+
+Test3038.wav
+Transcript: much higher than MD
+
+Test3038.wav
+Transcript:  suppose you make a c on Junction and the doping anime is much higher than do Point MD remember hear that these two and I and Andy they are not in the same space they are not in the same location X different places so anyways and the few side and D is the dokkan in the end side which is a different different region the PN Junction
+
+Test3039.wav
+Transcript: so these two they don't happen of the same place
+
+Test3039.wav
+Transcript:  so let's assume and a much higher than MD that's called one side The Junction and the way we do know this Junction that uses notation for this
+
+Test3039.wav
+Transcript:  Andy music
+
+Test3039.wav
+Transcript:  so did you know the fact that I'm a much higher than ND we had plus we put superscript Plus on the the doping that is high which is the TV so that's so we call this p+ then
+
+Test3039.wav
+Transcript:  so if you see this notation P plus and it means the doping in the peerage and is much higher than the Dark Moon the end sometimes you see even p + + 2 + that's just to indicate the doping is very high extremely hot
+
+Test3039.wav
+Transcript:  I'll tell you just to give me an idea that the dopamines are high you could have n + p s o n + p.m.
+
+Test3040.wav
+Transcript: the doping and he's much is the other way and D much higher than n a p + n so what happens if an egg is much higher than ND actually first qualitatively if I go back to this picture here in this picture if 
+I give you this picture and I asked roughly compare the doping and a 2 ND
+
+Test3040.wav
+Transcript: okay so anyways here
+
+Test3040.wav
+Transcript:  compare the doping and I to Andy you can say that and it is roughly equal to Andy and the way you know that because the width of the space charge region
+
+Test3040.wav
+Transcript:  XP here and ex and they look roughly the same they look equal in this picture from that I know the dope
+
+Test3041.wav
+Transcript: are roughly the same
+
+Test3041.wav
+Transcript:  okay so you this picture of the don't do things are the same but suppose I consider especially this case now PN Junction
+
+Test3041.wav
+Transcript:  then what do you what do we know we know that that will no longer be the case so XM will be different from XP and actually should go back to the Expressions you will see that
+
+Test3041.wav
+Transcript:  if you increase p+ means you and eyes large increasing and if you increase the what's XP become smaller
+
+Test3041.wav
+Transcript:  so he like me is XP is much smaller than X-Men
+
+Test3041.wav
+Transcript:  then what if I draw it it looks more like this
+
+Test3041.wav
+Transcript:  so XP is much more
+
+Test3042.wav
+Transcript: XM
+
+Test3042.wav
+Transcript:  okay so this is the case for p + 10
+
+Test3042.wav
+Transcript:  I need to limit that you can see if the doping is really very high DNA becomes extremely small so he double D's the sum of X and an XP I can say w i x n x n if your stomach feels extremely small
+
+Test3042.wav
+Transcript:  let it go back to the expression for XNX p&w and use this assumption
+
+Test3042.wav
+Transcript:  use this assumption that na is much higher than ND you can see you end up with this here we X-Men and that's what they were doing here
+
+Test3043.wav
+Transcript: okay so you're having this example is p + 10 which means in a much higher than ND and then if you go back to the expression for w
+
+Test3043.wav
+Transcript:  you can seek you will be certified to this XM simplify to the same expression so you end up with W roughly equal to extend as I just explained
+
+Test3043.wav
+Transcript:  and then the capacitance now capacitance is Epsilon / W Epsilon s / W so from back to get this expression for the junction capacitance under the special case p + 10
+
+Test3043.wav
+Transcript:  you're so that's so just let me check questions on
+
+Test3043.wav
+Transcript:  thanks so
+
+Test3043.wav
+Transcript:  okay so that's see Prime
+
+Test3044.wav
+Transcript: proceed with this capacity under the special case where does an eagle since any is so much larger than MD
+
+Test3044.wav
+Transcript:  I know you still there but the what it says of the capacity is not a function of that dope that's why it means
+
+Test3044.wav
+Transcript:  the capacitance is mainly determined by the lower dope
+
+Test3044.wav
+Transcript:  this year's will see experimental either use this to estimate the doping
+
+Test3044.wav
+Transcript:  one of the door, so they make the dope unless a n a very high and you can determine the other one next year so that's what we're showing out so you end up with this expression for c-prime like this you can rearrange if you can solve because I have the square root
+
+Test3044.wav
+Transcript:  so you can take the
+
+Test3045.wav
+Transcript: Cuervo signs and take one over that so let me write one over
+
+Test3045.wav
+Transcript:  CJ and square okay so take the inverse and then the square you got to
+
+Test3045.wav
+Transcript:  TDI + br
+
+Test3045.wav
+Transcript:  Uber
+
+Test3045.wav
+Transcript:  he Absalon S&D
+
+Test3045.wav
+Transcript:  let's say you pluck so so they so what they can do experimental it is this you have a PN Junction that is dope as like this and I much higher than the voltage be our that's what you apply this voltage be on
+
+Test3045.wav
+Transcript:  reverse flyes and you keep burying that vulgar
+
+Test3045.wav
+Transcript:  and then you measure the capacitance CJ that's what you measure
+
+Test3046.wav
+Transcript: when you block and then you after you so you have two measurements few CJ versus we are and you plot one over. Kapasi Square versus the vote so she can see from this expression
+
+Test3046.wav
+Transcript:  that should give me a straight line cuz think about this is why equal everything else is a constant is basically proportional to VR is proportion to be on a 5 + 1 / CJ Square as a function of b r it should be a straight line
+
+Test3046.wav
+Transcript:  and the slope of that night according to this is so if you look at the coefficient of the r is 2/3 Epsilon Andy that's the slope
+
+Test3046.wav
+Transcript:  guess what that's shown in the next light
+
+Test3046.wav
+Transcript:  okay so here
+
+Test3046.wav
+Transcript:  again so already discuss the
+
+Test3046.wav
+Transcript:  next
+
+Test3047.wav
+Transcript: sight picture with shows the Char this just illustrates that XP is much more than external mansion
+
+Test3047.wav
+Transcript:  but I get mutts to the charge has to be the same so if you look at this picture you see here this charge here I'm shading the charge in the. Discharge negative charge before -2 and discharging the end region is positive it is the plastic you the truth should still be the same magnitude
+
+Test3047.wav
+Transcript:  okay so even though XPS very small but because the NSA is very large that's why we can still have the same charge in the to read them straight line so that's so I guess what we're doing a few measurements 
+when I say these are the measurements something like this and then approximated by a straight line
+
+Test3047.wav
+Transcript:  the straight line
+
+Test3048.wav
+Transcript: they say that the measurement that's what you get from the measurement but then what you do is that's the dashed line is not for measurement you just extend that straight line until it intersects the Z Lexus
+
+Test3048.wav
+Transcript:  so why were you doing that because then so once I do that the say then you can measure the slope
+
+Test3048.wav
+Transcript:  and we mentioned before that the snow is 2/3 excellent Andy so then I know the store I can find Andy so from this you can find the dokkan
+
+Test3048.wav
+Transcript:  that's one thing you can find the other thing you can find from this extension of the straight-line this intersection point with the x axis or the VR access that intersection Point corresponds to one oversee Prime Square equal to 0 equation of the line and you said one over CJ Square to zero
+
+Test3049.wav
+Transcript: mean for that to be zero which means we are is equal to - BBI
+
+Test3049.wav
+Transcript:  she look at the right hand side the artist -2 BB on so I know the intersection Point VR is -2 bi so then by measuring the measuring voltage B R I can determine vdi
+
+Test3049.wav
+Transcript:  so you can expect two things the doping Andy and the built-in voltage from this from measuring the capacitance
+
+Test3049.wav
+Transcript:  okay so that's the what happens when the PN Junction is reverse bias not to finish this thing is we didn't mention current but the current would be very small when is reverse bias the reason is simply because back to that dariya because we increase the berry height remember that very height for example in the conduction height is provide
+
+Test3050.wav
+Transcript: electron electrons from diffusion
+
+Test3050.wav
+Transcript:  so the black DC that's the equilibrium and at that point that they're your height is evdi and that's exactly cancel the diffusion so that stopping electrons from the human diffusion entropy but now with the reverse biased you increase the Barre height so even you make it harder for you I can use so you can text without even trying to diffuse to from entropy simply because the battery is higher so they expect the current start with a currency do you know expect so we will discuss this for the card will be very small and you can see it what because of that very high so he has happened to electron the same thing happens to home with me 
+this
+
+Test3051.wav
+Transcript: this description applies to hold just for hoes like everything is opposite so for example The Diarrhea for host you need to look at TV the banners band energy and for hoes
+
+Test3051.wav
+Transcript:  let me use a different color for hose
+
+Test3051.wav
+Transcript:  this is the barrier for them this year but it has the same height as the electron the height is also evdi + BR but the hoes are here in the region and The Ronettes. Androphy there just to be the next night so by increasing the barrier the same thing happens you preventing house from diffusing from and to pee from Peachland house they want to defuse this way and by increasing. Diarrhea in green you make it harder for those hose to diffuse okay so you make your making it harder for holes and electrons to diffuse when you play Reverse by
+
+Test3052.wav
+Transcript: so the current would be very small from that
+
+Test3052.wav
+Transcript:  cancel forward bias as you can see him here with me as you apply a voltage opposite polarity to reverse by the
+
+Test3052.wav
+Transcript:  the P side now has a higher voltage compared to the end but that's the definition of forward by I know the internal Electric Feel points from an to pee so I can go back if that doesn't change and the reason why points for men to pee because the positive charges here in the end the negative charges in the p and the electric field points from + 2 - so that's the internal electric sheet call that Ian Turner
+
+Test3053.wav
+Transcript: and then you have external electric field caused by the voltage v i s here Plus at the P side of the end so that external voltage Viet what you called VA the direction of the voltage external voltage Steve 
+from plus to minus but in this case it would be from like this
+
+Test3053.wav
+Transcript:  so this is the E applied or external this is different from the reverse by now the applied field is opposite to the internal field so then the net electric let us assume the red the applied is smaller than the internal this month by increasing that both of you would increase that apply that I can feel but that's assuming it's smaller than Ian channel so that the net electric field will be the difference
+
+Test3054.wav
+Transcript: internal
+
+Test3054.wav
+Transcript:  my nasty apply
+
+Test3054.wav
+Transcript:  okay so I'm assuming he applied is smaller than a turn so the point is now how to do reverse flys it means the charge has to be smaller now and the only way the charger but I called before + 2 + -2 that has to become smaller and for that to be xnxp has the has to be smaller so you can see them the width of the space charge region will get smaller now the electric field will get smaller as you can see small electric eel 
+
+Test3054.wav
+Transcript:  bench and then now for the energy band diagram is again very similar to the reverse bias except it's just the opposite so let me go back to
+
+Test3055.wav
+Transcript: You Are Spice which is more important thing I didn't draw it
+
+Test3055.wav
+Transcript:  what is the Fermi energy
+
+Test3055.wav
+Transcript:  we know it won't be constant so as I said this for me energy has to shift down so roughly whatever the say to hear
+
+Test3055.wav
+Transcript:  because the distance between the Fermi energy are Fannie C. Cannot change that has that is fixed once dokkan is fixed she's the case and D. Distance cannot be changed so so f is there but the other side yes would not lined up with that so now he has no longer constant so I should the other side I'm not changing it so the other side yes you skip this song
+
+Test3055.wav
+Transcript:  so now you can see if he's not the same level so now so because of that
+
+Test3056.wav
+Transcript: to distinguish the two we call this ESP this is we add subscript and energy in the P side and Hermie energy in the and side and you can see the difference between those two Fair me out of these is again the voltage apply so the difference
+
+Test3056.wav
+Transcript:  is EVR
+
+Test3056.wav
+Transcript:  delicacy from here where is 0 it means what it means we are back to equilibrium I'm not applying about it so you can see that the Fermi energy would lineup would be the same Irfan will be equal to tsp and 
+the Fermi energy would be cost if you apply reverse the Fermi energy in this case for you by the Fermi energy in the end side would be lower than the Fermi energy in the peace sign as you can see in this picture       
+
+Test3057.wav
+Transcript: when is forward bias imagine you fix the peace sign and regions now you shifted up
+
+Test3057.wav
+Transcript:  so we're flying because why is that because we have flying so she look at 4 with us. She's implying negative voting there supposed to be a positive side the miners and we mention if the voltage is negative music in terms of energy means the opposite so it's like positive energy band diagram up
+
+Test3057.wav
+Transcript:  okay so let's see
+
+Test3057.wav
+Transcript:  this question
+
+Test3057.wav
+Transcript:  is this okay
+
+Test3058.wav
+Transcript: screen Frozen now
+
+Test3058.wav
+Transcript:  okay so we can see now now
+
+Test3058.wav
+Transcript:  yes peas that is fixed but he has an owl move remove up so now would be higher than ESP
+
+Test3058.wav
+Transcript:  and then what will happen to the berry height so you expect the very hard to get smaller now and you can see from here the very high to d e x BBI - behind cuz now would be smaller
+
+Test3058.wav
+Transcript:  case of the berry height would be smaller
+
+Test3058.wav
+Transcript:  official day of summer is here so
+
+Test3059.wav
+Transcript: so what is forward bias that means the voltage of the P side is higher than the inside and what happens if the berry height is reduced
+
+Test3059.wav
+Transcript:  and again if the berry height is reduced you make it easier for electrons and holes to diffuse because you reduce the barrier so electrons diffuse from ntp how's the fuse from tee to an which means what now you have a net car because you have now diffusion and end the current which way the current is Flowing so the current
+
+Test3059.wav
+Transcript:  he's so now I'm applying forward bias
+
+Test3059.wav
+Transcript:  the depletion region gets somewhat smaller
+
+Test3059.wav
+Transcript:  hose diffuser house
+
+Test3060.wav
+Transcript: news from p2n
+
+Test3060.wav
+Transcript:  electrons
+
+Test3060.wav
+Transcript:  diffuse the other way for a man to pee
+
+Test3060.wav
+Transcript:  electrons
+
+Test3060.wav
+Transcript:  diffuse from an 2p electron
+
+Test3060.wav
+Transcript:  even though the flow is opposite but again because of the charges opposite the current is actually in the same direction you to both so the current you to hold flow
+
+Test3060.wav
+Transcript:  is the the current due to the to the hose flowing from teacher and is in the same direction
+
+Test3060.wav
+Transcript:  which is p2n because homes have closed to charge and the current due to the electron flow so the electrons are flowing from an to pee like this but the character would be in the opposite direction because 
+of electrons have negative charge so the current due to electrons is also from Peter Pan so then the two would add up and the total current is the net cart is diffusion current
+
+Test3061.wav
+Transcript: guess what that's the the current
+
+Test3061.wav
+Transcript:  gesso
+
+Test3061.wav
+Transcript:  I mean the next step is to find this the expresso next thing is to find the current the expression for this current so I know the current is Flowing this way
+
+Test3061.wav
+Transcript:  that's the correct in terms of the Vault of your play in terms of e v a
+
+Test3061.wav
+Transcript:  that's what we need to find
+
+Test3061.wav
+Transcript:  so the current is let me
+
+Test3061.wav
+Transcript:  kiss somebody
+
+Test3061.wav
+Transcript:  let me draw the energy band diagram to illustrate the
+
+Test3062.wav
+Transcript: cancel
+
+Test3062.wav
+Transcript:  let's look at this energy band diagram here and if you look at I put the house so I drew the whole you open circles and your Eevee in the. Those are the house so again why are they are they look like that 
+you have more clothes to Evie because Evie is the lowest energy for housing to move down actually energy means it increases as you move down you have fewer of them so that their distribution would look something like that more close to Evie and less hose As you move down and then so those hoes they see this barrier here
+
+Test3062.wav
+Transcript:  if I extend the other end of Eevee
+
+Test3062.wav
+Transcript:  backspace key so below that energy they cannot diffuse buttholes
+
+Test3063.wav
+Transcript: I have energy Dion that so hear this picture right now I don't have any but let me add more home safe I have holes as I have something like this Mortal so these will diffuse would be able to diffuse and they will defuse this way
+
+Test3063.wav
+Transcript:  okay so here's the other picture will be clattered imagine first and then on the other side I have elected you have electrons
+
+Test3063.wav
+Transcript:  the other side is in the end region of
+
+Test3063.wav
+Transcript:  but you have small number of holes
+
+Test3063.wav
+Transcript:  and also those home with the fuse achoo
+
+Test3064.wav
+Transcript: Steppin Music Studios green for house so the house so that means something like that in the end we can you see have small number of post those are the minority carrier so those they move to the ends to the 
+peace side but not because of diffusion but they move is because of they see now an opposite of barrier they see a draw so she look at the Eevee to change it for them that's a drop and the other way to look at it look 
+at the electric she from and to pee so that tries to push them to her two-piece side electric things going this way
+
+Test3064.wav
+Transcript: and so the holes have positive charge so the holes close to the edge of the space charge region
+
+Test3065.wav
+Transcript: Electric Feel electric she would push them in this direction okay so that if you remember if it was I'm moving by drift where is the other one these where is these heaux hear from Peter and diffusion play see here you have two processes drift and diffusion but these two would cancel an equilibrium equilibrium the net whole car to the 0
+
+Test3065.wav
+Transcript: because these two would cancel and the same thing is happening for electrons exactly the same you have to flows and they cancel now she applied reverse bias
+
+Test3065.wav
+Transcript:  this you increase the barrier imagine you increase the barrier you make this component smaller
+
+Test3065.wav
+Transcript:  that's what happens when you increase the value hide you make the this component from T2 and smaller the other components
+
+Test3066.wav
+Transcript: entropy doesn't really change that much because the only see now like high or drunk and it's not a barrier for them still draw but he's just like fire I mean more drop so that correctly doesn't change what 
+is small to start with so you have that card from ntp small to start with and the other cars from P2 and now he's getting smaller so you end up with no color but the net current is very small so that's what happens when it's reversed by the next car on these very small
+
+Test3066.wav
+Transcript: where is Johnny Manziel now if it's forward bias if it's forward by again this right hand side component which is the drift component doesn't change imagine doesn't change its taste which is small to start 
+with but the diffusion components from Pichu and this one will increase significantly the reason is because you shifting down the banister EV this energy EV you shift it down
+
+Test3067.wav
+Transcript: you expose more house to or more holes would have more higher energy than that diarrhea so more hoes can refuse
+
+Test3067.wav
+Transcript:  that's basically what we're saying here you have now in net diffusion of holes from p2m
+
+Test3067.wav
+Transcript:  industry hose diffuse from T2 and an electrons from entropy it's because of that
+
+Test3067.wav
+Transcript:  this one of the next thing is to hear this is summarizing that so we're saying we have two cards we have an electric current in the conduction band and we have a whole car and if you remember the car always has two components drift and diffusion is denoted hear the whole car and JP is the sum of drift JP drift + JP diffusion and the same thing as some of this component and diffusion component
+
+Test3068.wav
+Transcript: from before that the expression for adrift in simply is a proportion to the electric field so for JP drift is a new PPL Electric Feel So know this one before and the diffusion we know it's minus edpd PDS that's the Formula Ford Fusion car holder Fusion car and the same thing for JN again we saw these Expressions before when we discussed drifting issue okay so these are the two components separately the whole component of the car and the electronic component the total current is the sum of the external current coming out from the PN Junction is the sum of the two JN + JP that's called the total current and that's what we want to fight 
+we want to find an expression for that totaled car
+
+Test3068.wav
+Transcript: now back to equilibrium I just mention under equilibrium for each carrier for the electrons or hold the current cancel that the net current is zero
+
+Test3068.wav
+Transcript:  so that's what they say for Verde energy
+
+Test3069.wav
+Transcript: people20 so what does that mean if you go back to the first expression on top if you say JP to put JP equal to 0 means that JP drift is minus JP diffusion which you mentioned before the drift cancel the diffusion that's why he and the same thing for n j and Jeff is - J and if you so that's at the equilibrium the to cancel each other and the net current is zero
+
+Test3069.wav
+Transcript:  but of course we're not interested in that just interested in a Playa Bowl
+
+Test3069.wav
+Transcript:  so that's what the next step is now when you apply a voltage we want to find the current so the thing is this is not easy problem but we have to make a few assumptions and because of that what we come up with is called the ideal dial
+
+Test3069.wav
+Transcript:  the current they said she called current voltage characteristics or we do know that bite
+
+Test3070.wav
+Transcript: IV characteristics of the idea because of these assumptions here
+
+Test3070.wav
+Transcript:  just let me go over these assumptions the first one is
+
+Test3070.wav
+Transcript:  abrupt definition of Step Junction so abrupt definition it means of you remember do it when I draw draw the PN Junction
+
+Test3070.wav
+Transcript:  we're assuming this this is whistling the doping and his constant throughout this. This is a peace sign here and I use custom uniform and the same thing the other side and E is uniform that's basically we're still in that and then we know that we have a depletion region Wilson that you see this - 9 this one is a problem that completely separates the depleted from Monday please that's what you mean by depletion
+
+Test3071.wav
+Transcript: step-by-step Junction news the doping except the Dolphins and they all the way to zero and then abruptly changes to Angie that's called the step Junction
+
+Test3071.wav
+Transcript:  because you could have the dope because in in reality in when you make a key on Junction the dolphin most liked his heart to change immediately zero to change from a abruptly it would be more like gradual 
+so for example in the text with you see is called graded PN Junction things like that are uniform and I'll grab the step Johnson what mean by non degenerate is related to be at the the doping so it's the dope and a R&D in this case it's the doping is too high then standing come back you can become non degenerate
+
+Test3072.wav
+Transcript: can become degenerate so here we want to avoid that so we are assuming the doping is not extremely high
+
+Test3072.wav
+Transcript:  because otherwise if you remember this could be affected if the semiconductor becomes degenerate we cannot use that maxwell-boltzmann approximation
+
+Test3072.wav
+Transcript:  the other option is low 11 injection again we did find this before the low-level injection mean when you change the carriers in a semiconductor screw some mechanism you inject the terius the amount that you inject should be much smaller than the majority carrying that tree so for example let's consider the peace sign and I still supposed to 50% in me at to the amount that you inject
+
+Test3072.wav
+Transcript:  should be much smaller than that so that so that should have. Let's say I inject electron electron minority carrier the amount should be much
+
+Test3073.wav
+Transcript: so let's say 10 to the turn 10 to the 11 things like that that's what you mean by low-level injection
+
+Test3073.wav
+Transcript:  the 4th of sumption is no recombination generation the depletion region okay so that the depletion region is this so we're staying where it for now will assume no recombination generation later on we'll come back to this and when added as non ideology
+
+Test3073.wav
+Transcript:  v a function this is important for the electric field
+
+Test3073.wav
+Transcript:  in the Baltic Region Bank is this
+
+Test3073.wav
+Transcript:  case of the bunk is the region outside the depletion region that's called the back when you have two sides so in the blank regions where some of the electric field is zero but actually not only that we have some of the electric field is zero if you're looking at the minority carriers
+
+Test3074.wav
+Transcript: again you see but that's the assumption
+
+Test3074.wav
+Transcript:  so I immediately from this assumption what does it mean if I'm assuming the electric field is zero which means I don't have dressed so it means the current is only the feud that's basically
+
+Test3074.wav
+Transcript:  6 of sumption is the total current is constant across the PN Junction
+
+Test3074.wav
+Transcript:  so what you're saying is
+
+Test3074.wav
+Transcript:  they say I have a current through the PN Junction
+
+Test3074.wav
+Transcript:  that turn
+
+Test3074.wav
+Transcript:  anywhere across the PN Junction any point x. Current is the same
+
+Test3074.wav
+Transcript:  why is that because this is back almost to conservation of like carriers of charge cuz that means what you injecting charges whatever child left on her house so you inject me with some rate so if I don't come come out from this side of the sea
+
+Test3075.wav
+Transcript: it's me and somehow inside you at some point in the carriers are increasing the Carrie Dusty's increasing and that's that's not steady-state so here we are swimming steady-state 7 so if that's the case of the current is cost them everywhere the other way simpler whatever Carrie is coming in from the region from the left hand side they should come out from the other side this current should be otherwise if they are not where does the difference go I don't have any other part you see that she's not like a transistor or there's no other Fair terminal
+
+Test3075.wav
+Transcript: so I'm coming in
+
+Test3076.wav
+Transcript: which means I just change the voltage across the PN Junction by you take short time to reach steady-state so we're assuming we reached an estate with expression for the current as a function of the voltage 
+you apply this is what you need to do we need to solve the continuity equation which we saw and the current flow equation
+
+Test3076.wav
+Transcript:  unless you too big I mean the actual problem is more complicated you have also to solve West Coast personals equation which is Electric Feel Good As for example the continuity equation if you remembered represents the change in the carrier Dynasty inside so changing n&p YouTube for example recombination generation current drift diffusion all those processes but if the carrier is changing
+
+Test3076.wav
+Transcript:  it means the charge also can change
+
+Test3077.wav
+Transcript: I got a sexy doctor tree cuz I remember what size equation is this one here
+
+Test3077.wav
+Transcript:  we saw this expression when we derive the electric field we use this expression here but the point is you can see here to Roar the charge-density so and Roy's are related to best get the charges of an MP social changing MMP the truck could change Roku change which means you could change so you have to update the electric field that's called Seth, so I can't exactly have to also solve an equation but here's a mention reaction neglecting the electric field swimming the main current is due to diffusion which is appropriate for a PN Junction
+
+Test3078.wav
+Transcript: at a certain place is the currency that she may need you to diffuser okay so we need to solve this equation continuity equation and Ashley will solve the special case of the continuity equation which we saw before the minority Carriage Fusion require
+
+Test3078.wav
+Transcript:  and the current flow so this is what we need to do this in the toolbar creature in the P buck and the end back
+
+Test3078.wav
+Transcript:  so this is what the
+
+Test3078.wav
+Transcript:  what we need to do so we can see you here we have to the two regions and Auntie the first equation is this equation is come straight from the minority carrier diffusion equation for sum dishes forward by  
+
+Test3078.wav
+Transcript:  I know that
+
+Test3079.wav
+Transcript: use a different color I know for example you inject through diffusion so that's why we call it in Jack so it's through diffusion but we have this
+
+Test3079.wav
+Transcript:  okay so let's say you in Duck house like this
+
+Test3079.wav
+Transcript:  but I fly forward by remember the barrier become smaller so that's why that's what's causing These Hoes to be to diffuse now they are able to diffuse and so do we call this inject injection so you inject in the holes to the other side so now you're adding hose to the end read
+
+Test3079.wav
+Transcript:  so
+
+Test3079.wav
+Transcript:  so the density of those holes this does a hole so you know but the thing is
+
+Test3080.wav
+Transcript: the other side the na that's also pee so how did you distinguish the two how do you distinguish between holes in the end region and how's the. The way we do that we add subscript so if we are in the end region we say p subscript in so if you see that you're looking at home first thing you just look at the subscript first I know I'm in the end region
+
+Test3080.wav
+Transcript: and peed music look like holes same thing the other side I can we look at electrons in the P region and subscript feet
+
+Test3080.wav
+Transcript:  it's the best imitation would be used the majority Carrie soofer exactly in the peerage the majority cares are whole there would be no. By P subscript p
+
+Test3080.wav
+Transcript:  so if I CPP it means
+
+Test3081.wav
+Transcript: I'm in a few in the. During which means and I'm looking at holes so it means it's majority of the same thing the other side would call this and so the best of electrons in the N region is called an abstract
+Test3081.wav
+Transcript:  he's so that's so he see basically different the subscript is different from the symbol that means it's minority carrier
+
+Test3081.wav
+Transcript:  okay so that's just notation because here we go back to this week again look at the house you're injecting hose from P to end now what we want to do is this more to see what happens to these hoes
+
+Test3081.wav
+Transcript:  in the end read after they are injected so then we need to look at
+
+Test3081.wav
+Transcript:  P subscript in those holes in the end region
+
+Test3082.wav
+Transcript: so we start with the continuity equation
+
+Test3082.wav
+Transcript:  so this actually this is very similar to
+
+Test3082.wav
+Transcript:  I think it's Electro the last lecture there is an example like this
+
+Test3082.wav
+Transcript:  so there was an example
+
+Test3082.wav
+Transcript:  it's not a PN Junction this is an example of when we were discussing the continuity equation so you have a semiconductor
+
+Test3082.wav
+Transcript:  and then he in this case the injection is not true like this case to diffusion is injection by Les a light you shine light
+
+Test3082.wav
+Transcript:  so that's light and that causes injection okay so let's say
+
+Test3083.wav
+Transcript: hose injection of hose at the surface
+
+Test3083.wav
+Transcript:  compare this to what I just described on top of the for the PN Junction it looks somewhat similar the only difference is the way you inject is different so here my cousin this injection or additional host 
+where is the PN Junction is the voltage so you're playing a forward biased and that causes the holes to diffuse to the other side or be injected in the Android that's the only difference
+
+Test3083.wav
+Transcript:  so now I can just look at the end bunk and this picture at the bottom is actually the same thing so after you inject These Hoes what will happen to them. They will move
+
+Test3083.wav
+Transcript:  they'll continue moving but why they would continue movement the reasons by diffusion because you have more of them near the surface at this point.
+
+Test3084.wav
+Transcript: so then I have non-uniform dust your house so they started issues but then when they defuse at the same time what happened to that very come by because they see a lot of electron and read so if you have an 
+order that's the way to the right so then you lose that hoe and I say the other one continues but eventually would have come by so they say at this point we can buy and so on so you can see the whole day so the way you solve this problem is you write the minority carrier diffusion equation and you solve for this whole density which is p in the end read
+
+Test3084.wav
+Transcript: as a function of x
+
+Test3084.wav
+Transcript:  at which is this
+
+Test3084.wav
+Transcript:  and that's what you need to do here in the in the PN Junction exactly the same and even the solution is the same
+
+Test3085.wav
+Transcript: so I suggest you go back to that lecture and you'll go over this example and you see we're doing exactly the same as that
+
+Test3085.wav
+Transcript:  so
+
+Test3085.wav
+Transcript:  so then we write the continuous equation so you can see with or the special case of the continuity equation which is called the minority carrier diffusion equation on top
+
+Test3085.wav
+Transcript:  and then this is the second equation just extraction of the car the only thing is
+
+Test3085.wav
+Transcript:  we removed it like the drift because I remember one of the Assumption is we are still the electric field is zero for minority carrier so there is no different for the only diffusion and finally this is just definition of density. These equations are written in terms of the excess house is my is PN - the equilibrium again remember that
+
+Test3086.wav
+Transcript: if you see Zero music whatever so this is the equilibrium
+
+Test3086.wav
+Transcript:  which means without voltage and this is like a piano on the left hand side is the total width with the voltage
+
+Test3086.wav
+Transcript:  so we have this so that's the continuous equation and that's basically the current and the same thing for the P side but so the important thing notes here for the. And you are actually looking at the end of minority so so the focus is on minority carrier in the end region you look at the hole in the P you look at electron cuz that's what you were injection from the other side
+
+Test3086.wav
+Transcript:  okay so I think we don't have much time the next step is basically to go through the each region and to solve The Continuous equation if I saw the continuity equation I'll get an expression for density
+
+Test3087.wav
+Transcript: as a function of X then from that
+
+Test3087.wav
+Transcript:  I can put it here take the derivative of that x minus EDT that will give me the car JP and I do the same thing for the electric
+
+Test3087.wav
+Transcript:  need to store for this
+
+Test3087.wav
+Transcript:  and then from that you put it back for the hearing for the car and JN and then you can sulfur giant okay once you do that almost done then after that you can add the to Guyana JT and that's the total car  
+
+Test3087.wav
+Transcript:  Tissot any questions of otherwise we will do this next time
+
+Test3087.wav
+Transcript:  guess I don't see any
+
+Test3087.wav
+Transcript:  okay so we meet next time
+
+Test3088.wav
+Transcript: a professor of the slides you uploaded they don't have the writing you did today yesterday like for the yesterday they don't have the you know the drawings you did
+
+Test3088.wav
+Transcript:  I mean I'll blow the slide earlier if they don't have their drawings you did on that lecture
+
+Test3088.wav
+Transcript:  I'm sorry to hear that don't have what their drawings you know it's like the right thing you do on your surface they don't have that no cuz I'm doing that in real time
+
+Test3088.wav
+Transcript:  also that won't get recorded know this would be recorded
+
+Test3088.wav
+Transcript:  oh good thank you because I don't want just to go over the slides this is actually I'm doing this right now
+
+Test3088.wav
+Transcript:  okay I was just worried I don't want to miss these writings you did it should be in recording now
+
+Test3088.wav
+Transcript:  Logan thank you
+
+Test3088.wav
+Transcript:  okay so I'll see you next time
+
+Test3089.wav
+Transcript: professor
+
+Test3089.wav
+Transcript:  pick up Professor thank you
+
+Test3089.wav
+Transcript:  Professor questions about classes I was wondering if you can meet or like a meet virtually at another time
+
+Test3089.wav
+Transcript:  where is right now okay
+
+Test3089.wav
+Transcript:  let me see
+
+Test3089.wav
+Transcript:  okay so if you want do you want okay so maybe you can leave this meeting and I'll start another meeting for us hours if you can still access it from that work and then what's your name Vincent way so I'll 
+start right now
