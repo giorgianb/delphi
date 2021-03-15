@@ -2,20 +2,40 @@ import csv
 from difflib import SequenceMatcher
 import sys
 import enchant
-import nltk
+from nltk.stem import WordNetLemmatizer
 import re
 import string
 from collections import defaultdict
 
+l = WordNetLemmatizer()
 d = enchant.DictWithPWL("en_US", "ee-vocab.txt")
 PUNCTUATION = set(string.punctuation) | {"–", "”"}
+word_counts = {}
+total_words = 0
+total_count = 0
+with open('word-frequency.txt') as fin:
+    for line in fin:
+        word, count = line.split()
+        count = int(count)
+        word_counts[word.lower().strip()] = count
+        total_count += count
+        total_words += 1
 
+def probability(word):
+    word = word.strip()
+    if word in word_counts:
+        return word_counts[word]/total_count
+    
+    lemmatized_word = l.lemmatize(word)
+    if lemmatized_word in word_counts:
+        return word_counts[word]/total_count
+
+    return 0
 
 # It is presumed that each chapter starts with its name
 # Step 1: Word merging
 # Step 1: Filter chapters by name.
 # Take advantage of this to find the start of the chapter
-
 def break_text_by_nonalpha(ct):
     groups = []
     current_group = [None, []]
@@ -41,13 +61,24 @@ def group_text_across_nonalpha(ct):
 
     return ''.join(texts)
 
-def word_merge_across_nonalpha(ct, max_merge_len=2):
+def is_merge_better(p_text_group, merged):
+    if not d.check(merged):
+        return False
+
+    non_empty = filter(lambda p_text: p_text[1], p_text_group)
+    nonmerged_prob = 1
+    for p_text in non_empty:
+        nonmerged_prob *= probability(p_text[1].lower().strip())
+
+    merged_prob = probability(merged.lower().strip())
+    return nonmerged_prob <= merged_prob
+
+
+def word_merge_across_nonalpha(ct, max_merge_len=4):
     def is_merge_candidate(p_text_group):
         p_a = len(p_text_group[0][1]) > 0 and len(p_text_group[-1][1]) > 0
-        p_b = all(0 <= len(text) <= 4 for p, text in p_text_group) 
-        p_c = any(len(text) > 0 for p, text in p_text_group)
-        p_d = any(len(text) > 0 and not d.check(text) for p, text in p_text_group)
-        return ((p_b and p_c) or p_d) and p_a
+        p_b = any(len(text) > 0 for p, text in p_text_group)
+        return p_a and p_b
 
     def merge(group):
         def to_merge_infix(p):
@@ -75,7 +106,7 @@ def word_merge_across_nonalpha(ct, max_merge_len=2):
 
             p, text = p_text_group[0]
             merged = merge(p_text_group)
-            if is_merge_candidate(p_text_group) and d.check(merged):
+            if is_merge_candidate(p_text_group) and is_merge_better(p_text_group, merged):
                 new_ct.append([p, merged])
                 last_merge = i + merge_len
             else:
@@ -117,23 +148,16 @@ if __name__ == '__main__':
         fin = csv.reader(f, quotechar='"')
         chapters = list(fin)
 
-    print('[Part 1]')
     unknown_words = defaultdict(int)
     for i, (cn, ct) in enumerate(chapters):
-        if (i + 1) % 25 == 0:
-            print(f'[Merging Chapter {i + 1}]')
         ct = break_text_by_nonalpha(ct)
         ct = word_merge_across_nonalpha(ct)
         update_unknown_word_count(ct, unknown_words)
-        #ct = filter_chapter_by_name(cn, ct)
-        chapters[i] = (cn, ct)
-
-    for i, (cn, ct) in enumerate(chapters):
-        if (i + 1) % 25 == 0:
-            print(f'[Grouping and filtering Chapter {i + 1}]')
         ct = group_text_across_nonalpha(ct)
         ct = filter_chapter_by_name(cn, ct)
         chapters[i] = (cn, ct)
+        if (i + 1) % 25 == 0:
+            print(f'[Finished Processing up to Chapter {i + 1}]')
 
     print(unknown_words)
     print(len(unknown_words))
