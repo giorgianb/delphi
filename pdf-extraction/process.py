@@ -8,7 +8,7 @@ import string
 from collections import defaultdict
 
 d = enchant.DictWithPWL("en_US", "ee-vocab.txt")
-#PUNCTUATION = set(string.punctuation) | {"–", "”"}
+PUNCTUATION = set(string.punctuation) | {"–", "”"}
 
 
 # It is presumed that each chapter starts with its name
@@ -16,74 +16,79 @@ d = enchant.DictWithPWL("en_US", "ee-vocab.txt")
 # Step 1: Filter chapters by name.
 # Take advantage of this to find the start of the chapter
 
-
-
-
-
-
-def punctify_text(ct):
+def break_text_by_nonalpha(ct):
     groups = []
     current_group = [None, []]
     for c in ct:
-        if not c.isalpha() and not c.isspace():
+        if not c.isalpha():
             if current_group != [None, []]:
-                groups.append([current_group[0], "".join(current_group[1]).split()])
+                groups.append([current_group[0], "".join(current_group[1])])
 
             current_group = [c, []]
         else:
             current_group[1].append(c)
 
-    groups.append([current_group[0], "".join(current_group[1]).split()])
+    groups.append([current_group[0], "".join(current_group[1])])
     return groups
 
+def group_text_across_nonalpha(ct):
+    texts = []
+    for p, text in ct:
+        if p is not None:
+            texts.append(p)
+        if text is not None:
+            texts.append(text)
 
-def word_merge_across_punct(ct):
-    global seen_merge_candidates
-    def is_merge_candidate(text_prev, text):
-        if len(text_prev) == 0 or len(text) == 0:
-            return False
+    return ''.join(texts)
 
-        prefix = text_prev[-1]
-        suffix = text[0]
+def word_merge_across_nonalpha(ct, max_merge_len=4):
+    def is_merge_candidate(p_text_group):
+        p_a = all(0 <= len(text) <= 4 for p, text in p_text_group) 
+        p_b = any(len(text) > 0 for p, text in p_text_group)
+        p_c = any(len(text) > 0 and not d.check(text) for p, text in p_text_group)
+        return (p_a and p_b) or p_c
 
-        return (not d.check(prefix) or not d.check(suffix))
+    def merge(group):
+        def to_merge_infix(p):
+            if p.isspace():
+                return ""
+            elif p in ("-", "–"):
+                return ""
+            else:
+                return p
 
-    for i, ((_, text_prev), (p, text)) in enumerate(zip(ct, ct[1:])):
-        if p in ("-", "–") and is_merge_candidate(text_prev, text):
-            merged = text_prev[-1] + text[0]
-            if merged and d.check(merged):
-                ct[i][1][-1] = merged
-                ct[i + 1][1] = text[1:]
+        merged = [group[0][1]] # ignore the non-alpha prefix of the first word
+        for p, text in group[1:]:
+            merged.append(to_merge_infix(p))
+            merged.append(text)
+
+        return "".join(merged)
+
+    for merge_len in range(2, max_merge_len + 1):
+        groups = (ct[i:i + merge_len] for i in range(len(ct)))
+        last_merge = 0
+        new_ct = []
+        for i, p_text_group in enumerate(groups):
+            if i < last_merge:
+                continue
+
+            p, text = p_text_group[0]
+            merged = merge(p_text_group)
+            if is_merge_candidate(p_text_group) and d.check(merged):
+                new_ct.append([p, merged])
+                last_merge = i + merge_len
+            else:
+                new_ct.append([p, text])
+
+        ct = new_ct
 
     return ct
 
-def word_merge_within_punct(ct, max_merge_len=2):
-    def is_merge_candidate(word_group):
-        return any(not d.check(word) for word in word_group)
 
-    for merge_len in range(1, max_merge_len + 1):
-        for i, (p, text) in enumerate(ct):
-            groups = (text[i:i + merge_len] for i in range(0, len(text), merge_len))
-            new_text = []
-            for word_group in groups:
-                if is_merge_candidate(word_group):
-                    merged = ''.join(word_group)
-                    if d.check(merged):
-                        new_text.append(merged)
-                    new_text.extend(word_group)
-                else:
-                    new_text.extend(word_group)
-
-            ct[i][1] = new_text
-
-    return ct
-
-unknown_words = defaultdict(int)
 def update_unknown_word_count(ct, unknown_words):
-    for (p, text) in ct:
-        for word in text:
-            if word and not d.check(word):
-                unknown_words[word] += 1
+    for (p, word) in ct:
+        if word and not d.check(word):
+            unknown_words[word] += 1
 
 def filter_chapter_by_name(cn, ct):
     name_match = SequenceMatcher(
@@ -111,12 +116,22 @@ if __name__ == '__main__':
         fin = csv.reader(f, quotechar='"')
         chapters = list(fin)
 
+    print('[Part 1]')
+    unknown_words = defaultdict(int)
     for i, (cn, ct) in enumerate(chapters):
-        ct = punctify_text(ct)
-        ct = word_merge_across_punct(ct)
-        ct = word_merge_within_punct(ct)
+        if (i + 1) % 25 == 0:
+            print(f'[Merging Chapter {i + 1}]')
+        ct = break_text_by_nonalpha(ct)
+        ct = word_merge_across_nonalpha(ct)
         update_unknown_word_count(ct, unknown_words)
         #ct = filter_chapter_by_name(cn, ct)
+        chapters[i] = (cn, ct)
+
+    for i, (cn, ct) in enumerate(chapters):
+        if (i + 1) % 25 == 0:
+            print(f'[Grouping and filtering Chapter {i + 1}]')
+        ct = group_text_across_nonalpha(ct)
+        ct = filter_chapter_by_name(cn, ct)
         chapters[i] = (cn, ct)
 
     print(unknown_words)
