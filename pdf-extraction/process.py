@@ -41,12 +41,13 @@ def group_text_across_nonalpha(ct):
 
     return ''.join(texts)
 
-def word_merge_across_nonalpha(ct, max_merge_len=4):
+def word_merge_across_nonalpha(ct, max_merge_len=2):
     def is_merge_candidate(p_text_group):
-        p_a = all(0 <= len(text) <= 4 for p, text in p_text_group) 
-        p_b = any(len(text) > 0 for p, text in p_text_group)
-        p_c = any(len(text) > 0 and not d.check(text) for p, text in p_text_group)
-        return (p_a and p_b) or p_c
+        p_a = len(p_text_group[0][1]) > 0 and len(p_text_group[-1][1]) > 0
+        p_b = all(0 <= len(text) <= 4 for p, text in p_text_group) 
+        p_c = any(len(text) > 0 for p, text in p_text_group)
+        p_d = any(len(text) > 0 and not d.check(text) for p, text in p_text_group)
+        return ((p_b and p_c) or p_d) and p_a
 
     def merge(group):
         def to_merge_infix(p):
