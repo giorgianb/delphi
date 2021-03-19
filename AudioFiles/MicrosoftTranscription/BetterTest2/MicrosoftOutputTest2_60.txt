@@ -1,0 +1,1 @@
+EP electric field. So we know this from before and the diffusion. We know it's minus EDPDPDX that's the formula for diffusion hold diffusion current and the same thing for JN again we saw these expressions before when we discuss drift and diffusion.

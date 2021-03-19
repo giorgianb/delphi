@@ -1,0 +1,1 @@
+Effect of if the semiconductor becomes degenerate, we cannot use that Maxwell Boltzmann approximation.
