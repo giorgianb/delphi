@@ -1,0 +1,4 @@
+*.pdf
+**/sector_training/*
+**/__pycache__
+**/*out*
