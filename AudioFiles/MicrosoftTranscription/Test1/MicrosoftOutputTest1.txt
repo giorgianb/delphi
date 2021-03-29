@@ -1,0 +1,2 @@
+File Path: C:\Users\HP\OneDrive - Stony Brook University\StonyBrook\ESE 440\ProjectGithub\lecture-toc\AudioFiles\Test2_OneMinuteSegments\Test2015.wav
+Need to make is now the voltage is not VR, it's VI plus VR. That's the only change.

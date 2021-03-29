@@ -1,0 +1,1 @@
+Have drift, so it means the current is only diffusion. That's basically that assumption.

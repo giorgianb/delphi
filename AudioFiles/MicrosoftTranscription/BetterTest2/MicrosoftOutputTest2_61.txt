@@ -1,0 +1,1 @@
+Equal to 0 it means that JP drift is minus JP diffusion, which we mentioned before. The drift cancels the diffusion. That's what it means and the same thing for NJ and Rift is minus J and effusions, so that's attic only at equilibrium.

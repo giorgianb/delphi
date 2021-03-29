@@ -1,0 +1,1 @@
+So so when is forward bias, that means the voltage at the P side is higher than the inside, and what happens is the very height is reduced.

@@ -1,0 +1,1 @@
+Need to make is now the voltage is not VR, it's VI plus VR. That's the only change.
