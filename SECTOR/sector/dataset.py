@@ -45,7 +45,7 @@ def group_by_topic(lst, topics):
 
 
 # assumes data is tokenized and lemmatized
-def make_dataset(data, processor, test_size=0.2, batch_sample_size=100, random_state=42):
+def make_dataset(data, processor, test_size=0.2, random_state=42):
     sentence_sequence = []
     sentence_texts = []
     topic_sequence = []
