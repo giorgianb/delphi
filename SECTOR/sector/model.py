@@ -5,6 +5,7 @@ from scipy.ndimage import gaussian_filter
 from scipy.signal import find_peaks
 import datetime
 import os
+import gc
 
 CHECKPOINT_DIR_TEMPLATE = 'sector_training/{}/'
 CHECKPOINT_NAME = 'sector.ckpt'
@@ -46,14 +47,24 @@ class Sector:
                 self._lstm_size, 
                 recurrent_initializer='glorot_uniform',
                 return_sequences=True,
-                stateful=training
+                stateful=False,
+                batch_input_shape=[
+                    batch_size, 
+                    document_size,
+                    self._sentence_embedding_size
+                ],
         )
         self._backwards_lstm = tf.keras.layers.LSTM(
                 self._lstm_size, 
                 recurrent_initializer='glorot_uniform',
                 return_sequences=True,
-                stateful=training,
-                go_backwards=True
+                stateful=False,
+                go_backwards=True,
+                batch_input_shape=[
+                    batch_size, 
+                    document_size,
+                    self._sentence_embedding_size
+                ],
         )
 
         self._bi_lstm = tf.keras.layers.Bidirectional(
@@ -71,6 +82,7 @@ class Sector:
         self._topic_layer = tf.keras.layers.Dense(self._topic_embedding_size, activation=act)
 
         self._model = tf.keras.models.Sequential((
+            tf.keras.layers.Masking(dtype=float),
             tf.keras.layers.LayerNormalization(dtype=float),
             self._bi_lstm,
             tf.keras.layers.LayerNormalization(dtype=float),
@@ -136,7 +148,7 @@ class Sector:
                     inputs, 
                     epochs=epochs, 
                     validation_data=validation_data, 
-                    callbacks=[cp_callback, es_callback]
+                    callbacks=[cp_callback, gc_callback]
             )
 
 
