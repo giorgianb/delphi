@@ -1,6 +1,6 @@
 import csv
 from torch.utils.data import DataLoader, Dataset, Sampler
-from torch import Tensor
+from torch import tensor, Tensor
 import torch
 import embeddings
 from sklearn.model_selection import train_test_split
@@ -29,10 +29,13 @@ class TopicDataset(Dataset):
         texts = self._sentence_texts
         topics = self._topics
         sents_minibatch = Tensor([sents[gi][wgi] for gi, wgi in indices])
-        texts_minibatch = [texts[gi][wgi] for gi, wgi in indices]
-        topics_minibatch = Tensor([topics[gi][wgi] for gi, wgi in indices])
+        texts_minibatch = np.array([texts[gi][wgi] for gi, wgi in indices])
+        # use tensor to keep tensor as integer
+        topics_minibatch = tensor([topics[gi][wgi] for gi, wgi in indices])
 
-        return (sents_minibatch, texts_minibatch, topics_minibatch)
+        return (sents_minibatch,
+                texts_minibatch, 
+                topics_minibatch)
 
     def __len__(self):
         return len(self._key_lengths)
@@ -45,10 +48,16 @@ class TopicBatchSampler(Sampler):
         self._indices = tuple(tuple(range(group_length)) for group_length in group_lengths)
         self._total = sum(group_lengths)
 
+    def generate_document_size(self):
+        self._document_size = random.randint(self.min_document_size, self.max_document_size + 1)
+
+    def __len__(self):
+        return int(math.floor(self._total / self._document_size))
+
     def __iter__(self):
         group_order = np.arange(len(self._indices))
-        ds = random.randint(self.min_document_size, self.max_document_size + 1)
         perm = lambda x: np.random.permutation(x) if self.train else x
+        ds = self._document_size
         indices = self._indices
         if self.train:
             group_order = np.random.permutation(group_order)
@@ -63,7 +72,6 @@ class TopicBatchSampler(Sampler):
         return documents
 
 
-DATA_FILE = "micro-data.csv"
 def chunks(lst, n):
     return (lst[i:i + n] for i in range(0, len(lst), n))
 
@@ -88,7 +96,7 @@ def group_by_topic(lst, topics):
 
 
 # assumes data is tokenized and lemmatized
-def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
+def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, allowed_topic={}):
     sentence_sequence = []
     sentence_texts = []
     topic_sequence = []
@@ -96,6 +104,9 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
     topic_counter = 0
     topics = {}
     for topic, parsed, sentences in data:
+        if topic not in allowed_topic:
+            continue
+
         if topic not in topics:
             topics[topic] = topic_counter
             topic_counter += 1
@@ -147,7 +158,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
     )
     batch_sampler = TopicBatchSampler(
             dataset.group_lengths, 
-            32,
+            1,
             512,
     )
 
@@ -158,7 +169,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
     )
     train_batch_sampler = TopicBatchSampler(
             train_dataset.group_lengths, 
-            32,
+            1,
             512,
     )
 
@@ -175,9 +186,9 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
     )
 
     def smart_collate(batch):
-        sentences = torch.stack(tuple(mb[0] for mb in batch))
-        texts = tuple(mb[1] for mb in batch)
-        topics = torch.stack(tuple(mb[2] for mb in batch))
+        sentences = torch.stack(tuple(mb[0] for mb in batch), dim=1)
+        texts = np.stack(tuple(mb[1] for mb in batch), axis=1)
+        topics = torch.stack(tuple(mb[2] for mb in batch), dim=1)
         return sentences, texts, topics
 
     train_dataloader = DataLoader(
@@ -202,6 +213,10 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8,random_state=42):
 
     return topics, dataloader, train_dataloader, test_dataloader
 
+
+DATA_FILE = "micro-data.csv"
+
+
 with open(DATA_FILE) as f:
     data = list(csv.reader(f))
     titles = (row[0] for row in data)
@@ -214,7 +229,198 @@ with open(DATA_FILE) as f:
     test_dataset = None
 
 def initialize_dataset_bloom(n_hash_functions, sentence_embedding_size, random_state=42):
-    global topics, dataset, train_dataset, test_dataset
+    global topics, dataset, train_dataset, test_dataset, DATA_TOPICS
     processor = embeddings.BloomFilter(n_hash_functions, sentence_embedding_size)
-    datasets = make_dataset(data, processor, random_state=random_state)
+    datasets = make_dataset(data, processor, random_state=random_state, DATA_TOPICS)
     topics, dataset, train_dataset, test_dataset = datasets
+
+
+DATA_TOPICS = {
+    "PROLOGUE I: PROLOGUE TO ELECTRONICS",
+    "Brief History",
+    "Passive and Active Devices",
+    "Electronic Circuits",
+    "Discrete and Integrated Circuits",
+    "Analog and Digital Signals",
+    "Notation",
+    "Summary",
+    "PART 1: SEMICONDUCTOR DEVICES AND BASIC APPLICATIONS",
+    "Chapter 1: Semiconductor Materials and Diodes",
+    "Preview",
+    "1.1 Semiconductor Materials and Properties",
+    "1.2 The pn Junction",
+    "1.3 Diode Circuits: DC Analysis and Models",
+    "1.4 Diode Circuits: AC Equivalent Circuit",
+    "1.5 Other Diode Types",
+    "1.6 Design Application: Diode Thermometer",
+    "1.7 Summary",
+    "Chapter 2: Diode Circuits",
+    "2.1 Rectifier Circuits",
+    "2.2 Zener Diode Circuits",
+    "2.3 Clipper and Clamper Circuits",
+    "2.4 Multiple-Diode Circuits",
+    "2.5 Photodiode and LED Circuits",
+    "2.6 Design Application: DC Power Supply",
+    "2.7 Summary",
+    "Chapter 3: The Field-Effect Transistor",
+    "3.1 MOS Field-Effect Transistor",
+    "3.2 MOSFET DC Circuit Analysis",
+    "3.3 Basic MOSFET Applications: Switch, Digital Logic Gate, and Amplifier",
+    "3.4 Constant-Current Biasing",
+    "3.5 Multistage MOSFET Circuits",
+    "3.6 Junction Field-Effect Transistor",
+    "3.7 Design Application: Diode Thermometer with an MOS Transistor",
+    "3.8 Summary",
+    "Chapter 4: Basic FET Amplifiers",
+    "4.1 The MOSFET Amplifier",
+    "4.2 Basic Transistor Amplifier Configurations",
+    "4.3 The Common-Source Amplifier",
+    "4.4 The Common-Drain (Source-Follower) Amplifier",
+    "4.5 The Common-Gate Configuration",
+    "4.6 The Three Basic Amplifier Configurations: Summary and Comparison",
+    "4.7 Single-Stage Integrated Circuit MOSFET Amplifiers",
+    "4.8 Multistage Amplifiers",
+    "4.9 Basic JFET Amplifiers",
+    "4.10 Design Application: A Two-Stage Amplifier",
+    "4.11 Summary",
+    "Chapter 5: The Bipolar Junction Transistor",
+    "5.1 Basic Bipolar Junction Transistor",
+    "5.2 DC Analysis of Transistor Circuits",
+    "5.3 Basic Transistor Applications",
+    "5.4 Bipolar Transistor Biasing",
+    "5.5 Multistage Circuits",
+    "5.6 Design Application: Diode Thermometer with a Bipolar Transistor",
+    "5.7 Summary",
+    "Chapter 6: Basic BJT Amplifiers",
+    "6.1 Analog Signals and Linear Amplifiers",
+    "6.2 The Bipolar Linear Amplifier",
+    "6.3 Basic Transistor Amplifier Configurations",
+    "6.4 Common-Emitter Amplifiers",
+    "6.5 AC Load Line Analysis",
+    "6.6 Common-Collector (Emitter-Follower) Amplifier",
+    "6.7 Common-Base Amplifier",
+    "6.8 The Three Basic Amplifiers: Summary and Comparison",
+    "6.9 Multistage Amplifiers",
+    "6.10 Power Considerations",
+    "6.11 Design Application: Audio Amplifier",
+    "6.12 Summary",
+    "Chapter 7: Frequency Response",
+    "7.1 Amplifier Frequency Response",
+    "7.2 System Transfer Functions",
+    "7.3 Frequency Response: Transistor Amplifiers with Circuit Capacitors",
+    "7.4 Frequency Response: Bipolar Transistor",
+    "7.5 Frequency Response: The FET",
+    "7.6 High-Frequency Response of Transistor Circuits",
+    "7.7 Design Application: A Two-Stage Amplifier with Coupling Capacitors",
+    "7.8 Summary",
+    "Chapter 8: Output Stages and Power Amplifiers",
+    "8.1 Power Amplifiers",
+    "8.2 Power Transistors",
+    "8.3 Classes of Amplifiers",
+    "8.4 Class-A Power Amplifiers",
+    "8.5 Class-AB Push–Pull Complementary Output Stages",
+    "8.6 Design Application: An Output Stage Using MOSFETs",
+    "8.7 Summary",
+    "PROLOGUE II: PROLOGUE TO ELECTRONIC DESIGN",
+    "Design Approach",
+    "System Design",
+    "Electronic Design",
+    "Conclusion",
+    "PART 2: ANALOG ELECTRONICS",
+    "Chapter 9: Ideal Operational Amplifiers and Op-Amp Circuits",
+    "9.1 The Operational Amplifier",
+    "9.2 Inverting Amplifier",
+    "9.3 Summing Amplifier",
+    "9.4 Noninverting Amplifier",
+    "9.5 Op-Amp Applications",
+    "9.6 Operational Transconductance Amplifiers",
+    "9.7 Op-Amp Circuit Design",
+    "9.8 Design Application: Electronic Thermometer with an Instrumentation Amplifier",
+    "9.9 Summary",
+    "Chapter 10: Integrated Circuit Biasing and Active Loads",
+    "10.1 Bipolar Transistor Current Sources",
+    "10.2 FET Current Sources",
+    "10.3 Circuits with Active Loads",
+    "10.4 Small-Signal Analysis: Active Load Circuits",
+    "10.5 Design Application: An NMOS Current Source",
+    "10.6 Summary",
+    "Chapter 11: Differential and Multistage Amplifiers",
+    "11.1 The Differential Amplifier",
+    "11.2 Basic BJT Differential Pair",
+    "11.3 Basic FET Differential Pair",
+    "11.4 Differential Amplifier with Active Load",
+    "11.5 BiCMOS Circuits",
+    "11.6 Gain Stage and Simple Output Stage",
+    "11.7 Simplified BJT Operational Amplifier Circuit",
+    "11.8 Diff-Amp Frequency Response",
+    "11.9 Design Application: A CMOS Diff-Amp",
+    "11.10 Summary",
+    "Chapter 12: Feedback and Stability",
+    "12.1 Introduction to Feedback",
+    "12.2 Basic Feedback Concepts",
+    "12.3 Ideal Feedback Topologies",
+    "12.4 Voltage (Series–Shunt) Amplifiers",
+    "12.5 Current (Shunt–Series) Amplifiers",
+    "12.6 Transconductance (Series–Series) Amplifiers",
+    "12.7 Transresistance (Shunt–Shunt) Amplifiers",
+    "12.8 Loop Gain",
+    "12.9 Stability of the Feedback Circuit",
+    "12.10 Frequency Compensation",
+    "12.11 Design Application: A MOSFET Feedback Circuit",
+    "12.12 Summary",
+    "Chapter 13: Operational Amplifier Circuits",
+    "13.1 General Op-Amp Circuit Design",
+    "13.2 A Bipolar Operational Amplifier Circuit",
+    "13.3 CMOS Operational Amplifier Circuits",
+    "13.4 BiCMOS Operational Amplifier Circuits",
+    "13.5 JFET Operational Amplifier Circuits",
+    "13.6 Design Application: A Two-Stage CMOS Op-Amp to Match a Given Output Stage",
+    "13.7 Summary",
+    "Chapter 14: Nonideal Effects in Operational Amplifier Circuits",
+    "14.1 Practical Op-Amp Parameters",
+    "14.2 Finite Open-Loop Gain",
+    "14.3 Frequency Response",
+    "14.4 Offset Voltage",
+    "14.5 Input Bias Current",
+    "14.6 Additional Nonideal Effects",
+    "14.7 Design Application: An Offset Voltage Compensation Network",
+    "14.8 Summary",
+    "Chapter 15: Applications and Design of Integrated Circuits",
+    "15.1 Active Filters",
+    "15.2 Oscillators",
+    "15.3 Schmitt Trigger Circuits",
+    "15.4 Nonsinusoidal Oscillators and Timing Circuits",
+    "15.5 Integrated Circuit Power Amplifiers",
+    "15.6 Voltage Regulators",
+    "15.7 Design Application: An Active Bandpass Filter",
+    "15.8 Summary",
+    "PROLOGUE III: PROLOGUE TO DIGITAL ELECTRONICS",
+    "Logic Functions and Logic Gates",
+    "Logic Levels",
+    "Noise Margin",
+    "Propagation Delay Times and Switching Times",
+    "PART 3: DIGITAL ELECTRONICS",
+    "Chapter 16: MOSFET Digital Circuits",
+    "16.1 NMOS Inverters",
+    "16.2 NMOS Logic Circuits",
+    "16.3 CMOS Inverter",
+    "16.4 CMOS Logic Circuits",
+    "16.5 Clocked CMOS Logic Circuits",
+    "16.6 Transmission Gates",
+    "16.7 Sequential Logic Circuits",
+    "16.8 Memories: Classifications and Architectures",
+    "16.9 RAM Memory Cells",
+    "16.10 Read-Only Memory",
+    "16.11 Data Converters",
+    "16.12 Design Application: A Static CMOS Logic Gate",
+    "16.13 Summary",
+    "Chapter 17: Bipolar Digital Circuits",
+    "17.1 Emitter-Coupled Logic (ECL)",
+    "17.2 Modified ECL Circuit Configurations",
+    "17.3 Transistor–Transistor Logic",
+    "17.4 Schottky Transistor–Transistor Logic",
+    "17.5 BiCMOS Digital Circuits",
+    "17.6 Design Application: A Static ECL Gate",
+    "17.7 Summary",
+}
+    
