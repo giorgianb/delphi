@@ -3,7 +3,7 @@ import torch.nn as nn
 import numpy as np
 from sklearn.decomposition import PCA
 from scipy.ndimage import gaussian_filter
-from scipy.signal import find_peaks
+from scipy.signal import argrelmax
 import datetime
 import os
 import gc
@@ -97,11 +97,12 @@ class Sector(nn.Module):
         x, y = np.meshgrid(t, t)
         kernel = np.exp(-0.5 * (x**2 + y**2)/std**2)
 
-        return kernel/np.sum(kernel)
+        return (kernel/np.sum(kernel)).astype(np.float32)
 
     @staticmethod
     def _batch_pca(e, dim):
         with torch.no_grad():
+            e = torch.transpose(e, 0, 1)
             u, s, v = torch.svd(e)
             u = u[:, :, :dim]
             s = s[:, :dim]
@@ -126,28 +127,33 @@ class Sector(nn.Module):
             e_f = Sector._batch_pca(x_f, self._segmentation_space_size)
             e_b = Sector._batch_pca(x_b, self._segmentation_space_size)
             with torch.no_grad():
-                e_f = self._gaussian_filter(e_f).squeeze()
-                e_b = self._gaussian_filter(e_b).squeeze()
+                e_f = self._gaussian_filter(e_f.unsqueeze(1))
+                e_b = self._gaussian_filter(e_b.unsqueeze(1))
+                e_f = e_f.squeeze(1)
+                e_b = e_b.squeeze(1)
 
                 e_f_norms = torch.sqrt(torch.einsum('bsf,bsf->bs', e_f, e_f))
                 e_b_norms = torch.sqrt(torch.einsum('bsf,bsf->bs', e_b, e_b))
 
-                e_f_a = e_f[:, :, :-1]
-                e_f_b = e_f[:, :, 1:]
+                e_f_a = e_f[:, :-1, :]
+                e_f_b = e_f[:, 1:, :]
                 e_f_a_norms = e_f_norms[:, :-1]
                 e_f_b_norms = e_f_norms[:, 1:]
                 d_f = torch.einsum('bsf,bsf->bs', e_f_a, e_f_b)/(e_f_a_norms * e_f_b_norms)
 
-                e_b_a = e_b[:, :, :-1]
-                e_b_b = e_b[:, :, 1:]
+                e_b_a = e_b[:, :-1, :]
+                e_b_b = e_b[:, 1:, :]
                 e_b_a_norms = e_b_norms[:, :-1]
                 e_b_b_norms = e_b_norms[:, 1:]
                 d_b = torch.einsum('bsf,bsf->bs', e_b_a, e_b_b)/(e_b_a_norms * e_b_b_norms)
 
                 d = torch.sqrt(d_f * d_b)
-                pos = torch.argmax(d, dim=1)
+                d_left = d[:, :-1] > d[:, 1:]
+                d_right = d[:, 1:] > d[:, :-1]
+                peaks = torch.zeros((d.shape[0], d.shape[1]))
+                peaks[:, 1:-1] = d_left[:, 1:] * d_right[:, :-1]
 
-            return topic_preds, pos
+            return topic_preds, peaks
 
         return topic_preds
 
@@ -225,6 +231,7 @@ class Sector(nn.Module):
         weights_file = checkpoint_dir + 'model_weights'
         accuracies = []
         val_accuracies = []
+        val_p_ks = []
         epoch_losses = []
         val_losses = []
         best_val_accuracy = 0
@@ -234,11 +241,11 @@ class Sector(nn.Module):
             inputs.sampler.generate_document_size()
             length = len(inputs)
             batches = tuple(inputs)
-            for i, (sentence_batch, text_batch, topics_batch) in enumerate(batches):
+            for i, (sent_batch, text_batch, topics_batch, trans_batch) in enumerate(batches):
                 optim.zero_grad()
-                sentence_batch = sentence_batch.to('cuda')
+                sent_batch = sent_batch.to('cuda')
                 topics_batch = topics_batch.to('cuda')
-                preds = model(sentence_batch, segment=False)
+                preds = model(sent_batch, segment=False)
                 preds = preds.view(-1, model._topic_embedding_size)
                 target = topics_batch.view(-1)
 
@@ -254,29 +261,40 @@ class Sector(nn.Module):
             with torch.no_grad():
                 total_correct = 0
                 total = 0
-                for sentence_batch, text_batch, topics_batch in batches:
-                    sentence_batch = sentence_batch.to('cuda')
+                p_k = 0
+                for sent_batch, text_batch, topics_batch, trans_batch in batches:
+                    sent_batch = sent_batch.to('cuda')
                     topics_batch = topics_batch.to('cuda')
-                    preds = torch.argmax(model(sentence_batch, segment=False), dim=-1)
+                    preds, segs = model(sent_batch)
+                    preds = torch.argmax(preds, dim=-1)
+                    p_k += torch.mean(model.compute_p_k(trans_batch, segs))
                     total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                    total += sentence_batch.shape[0] * sentence_batch.shape[1]
+                    total += sent_batch.shape[0] * sent_batch.shape[1]
 
             print(f'training accuracy: {total_correct/total}')
+            print(f'training average p_k: {p_k/total}')
             accuracies.append(total_correct/total)
             with torch.no_grad():
                 total_correct = 0
                 total = 0
                 validation_data.sampler.generate_document_size()
-                for sentence_batch, text_batch, topics_batch in validation_data:
-                    sentence_batch = sentence_batch.to('cuda')
+                p_ks = []
+                for sent_batch, text_batch, topics_batch, trans_batch in validation_data:
+                    sent_batch = sent_batch.to('cuda')
                     topics_batch = topics_batch.to('cuda')
-                    preds = torch.argmax(model(sentence_batch, segment=False), dim=-1)
+                    preds, segs = model(sent_batch)
+                    preds = torch.argmax(preds, dim=-1)
                     total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                    total += sentence_batch.shape[0] * sentence_batch.shape[1]
+                    total += sent_batch.shape[0] * sent_batch.shape[1]
+                    p_k = model.compute_p_k(trans_batch, segs)
+                    p_ks.append(torch.mean(p_k))
 
+            val_p_k = sum(p_ks)/len(p_ks)
             val_accuracy = total_correct / total
             print(f'validation accuracy: {val_accuracy}')
+            print(f'validation average p_k: {val_p_k}')
             val_accuracies.append(val_accuracy)
+            val_p_ks.append(val_p_k)
             if val_accuracy > best_val_accuracy:
                 best_val_accuracy = val_accuracy
                 torch.save(model.state_dict(), weights_file)
@@ -285,9 +303,22 @@ class Sector(nn.Module):
         history_file = checkpoint_dir + 'history.csv'
         with open(history_file, 'w') as f:
             fout = csv.writer(f)
-            for acc, val_acc, loss in zip(accuracies, val_accuracies, epoch_losses):
-                fout.writerow((acc, val_acc, loss))
+            for acc, val_acc, p_k, loss in zip(accuracies, val_accuracies, val_p_ks, epoch_losses):
+                fout.writerow((acc, val_acc, p_k, loss))
 
         return model, accuracies, val_accuracies
 
+    @staticmethod
+    def compute_p_k(seg_ref, seg_hyp):
+        with torch.no_grad():
+            p_ks = torch.zeros(seg_ref.shape[0])
+            for i, (ref_mbatch, seg_mbatch) in enumerate(zip(seg_ref, seg_hyp)):
+                k = len(ref_mbatch) // ((torch.sum(ref_mbatch) + 1) * 2)
+                d_ref = torch.cumsum(ref_mbatch, dim=-1)
+                d_hyp = torch.cumsum(seg_mbatch, dim=-1)
+                d_ref = d_ref[k:] == d_ref[:-k]
+                d_hyp = d_hyp[k:] == d_hyp[:-k]
+                equiv = d_ref * d_hyp
+                p_ks[i] = torch.sum(equiv) / len(equiv)
 
+            return p_ks
