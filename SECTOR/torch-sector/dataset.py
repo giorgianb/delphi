@@ -10,6 +10,7 @@ import random
 import itertools
 import numpy as np
 import math
+from icecream import ic
 
 csv.field_size_limit(sys.maxsize)
 class TopicDataset(Dataset):
@@ -32,10 +33,12 @@ class TopicDataset(Dataset):
         texts_minibatch = np.array([texts[gi][wgi] for gi, wgi in indices])
         # use tensor to keep tensor as integer
         topics_minibatch = tensor([topics[gi][wgi] for gi, wgi in indices])
+        transitions_minibatch = topics_minibatch[1:] != topics_minibatch[:-1]
 
         return (sents_minibatch,
                 texts_minibatch, 
-                topics_minibatch)
+                topics_minibatch,
+                transitions_minibatch)
 
     def __len__(self):
         return len(self._key_lengths)
@@ -96,7 +99,7 @@ def group_by_topic(lst, topics):
 
 
 # assumes data is tokenized and lemmatized
-def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, allowed_topic={}):
+def make_dataset(data, processor, test_size=0.2, batch_size=1, random_state=42, allowed_topics={}):
     sentence_sequence = []
     sentence_texts = []
     topic_sequence = []
@@ -104,7 +107,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, 
     topic_counter = 0
     topics = {}
     for topic, parsed, sentences in data:
-        if topic not in allowed_topic:
+        if topic not in allowed_topics:
             continue
 
         if topic not in topics:
@@ -159,7 +162,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, 
     batch_sampler = TopicBatchSampler(
             dataset.group_lengths, 
             1,
-            512,
+            384,
     )
 
     train_dataset = TopicDataset(
@@ -170,7 +173,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, 
     train_batch_sampler = TopicBatchSampler(
             train_dataset.group_lengths, 
             1,
-            512,
+            384,
     )
 
     test_dataset = TopicDataset(
@@ -189,7 +192,8 @@ def make_dataset(data, processor, test_size=0.2, batch_size=8, random_state=42, 
         sentences = torch.stack(tuple(mb[0] for mb in batch), dim=1)
         texts = np.stack(tuple(mb[1] for mb in batch), axis=1)
         topics = torch.stack(tuple(mb[2] for mb in batch), dim=1)
-        return sentences, texts, topics
+        transitions = torch.stack(tuple(mb[3] for mb in batch), dim=0)
+        return sentences, texts, topics, transitions
 
     train_dataloader = DataLoader(
             train_dataset, 
@@ -231,7 +235,7 @@ with open(DATA_FILE) as f:
 def initialize_dataset_bloom(n_hash_functions, sentence_embedding_size, random_state=42):
     global topics, dataset, train_dataset, test_dataset, DATA_TOPICS
     processor = embeddings.BloomFilter(n_hash_functions, sentence_embedding_size)
-    datasets = make_dataset(data, processor, random_state=random_state, DATA_TOPICS)
+    datasets = make_dataset(data, processor, random_state=random_state, allowed_topics=DATA_TOPICS)
     topics, dataset, train_dataset, test_dataset = datasets
 
 
