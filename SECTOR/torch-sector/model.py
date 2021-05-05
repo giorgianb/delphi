@@ -102,17 +102,11 @@ class Sector(nn.Module):
     @staticmethod
     def _batch_pca(e, dim):
         with torch.no_grad():
-            mu = torch.mean(e, dim=0)
-            c = e - mu # each column represents a variable
-            cov = (torch.einsum('sbi,sbj->bij', c, c)/c.shape[0]).cpu().numpy()
+            u, s, v = torch.svd(e)
+            u = u[:, :, :dim]
+            s = s[:, :dim]
 
-        evals, evecs = np.linalg.eig(cov)
-        ind = np.argsort(evals, axis=-1)[:, ::-1][:, :dim]
-        # eigenvectors are columns
-        with torch.no_grad():
-            evecs = evecs[np.arange(evals.shape[0]).reshape(-1, 1), :, ind]
-            evecs = torch.from_numpy(evecs).to('cuda:0')
-            return torch.einsum('sbf,bnf->bsn', c, evecs)
+            return u * torch.unsqueeze(s, 1)
 
     def forward(self, sentence_batch, segment=True):
         x = self._ln_input(sentence_batch)
