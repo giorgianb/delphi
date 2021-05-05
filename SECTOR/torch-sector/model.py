@@ -7,6 +7,8 @@ from scipy.signal import find_peaks
 import datetime
 import os
 import gc
+from icecream import ic
+import csv
 
 CHECKPOINT_DIR_TEMPLATE = 'sector_training/{}/'
 CHECKPOINT_NAME = 'sector.ckpt'
@@ -16,35 +18,29 @@ class Sector(nn.Module):
             self, 
             lstm_size, 
             sentence_embedding_size,
-            document_size,
             topic_embedding_size, 
-            batch_size,
             squeeze_layer_size = 64,
-            segmentation_space_size = 16,
             gaussian_kernel_size = 11,
+            segmentation_space_size = 16,
             segmentation_smoothing_std = 2.5,
             multi_topic=False
             ):
         super(Sector, self).__init__()
         self._lstm_size = lstm_size
-        self._document_size = document_size
         self._sentence_embedding_size = sentence_embedding_size
         self._topic_embedding_size = topic_embedding_size
-        self._batch_size = batch_size
         self._segmentation_space_size = segmentation_space_size
         self._segmentation_smoothing_std = segmentation_smoothing_std
         self._multi_topic = multi_topic
         self._training_model_built = True
         self._model = None
         self._squeeze_layer_size = squeeze_layer_size
-        self.gaussian_kernel_size = gaussian_kernel_size
+        self._gaussian_kernel_size = gaussian_kernel_size
         assert gaussian_kernel_size % 2 == 1
 
         self._build_model()
 
     def _build_model(self, training=True, weights_file=None):
-        batch_size = self._batch_size if training else 1
-        document_size = self._document_size if training else None
         embedding_size = self._sentence_embedding_size
         self._training_model_built = training
         self._forward_lstm = nn.LSTM(
@@ -79,17 +75,22 @@ class Sector(nn.Module):
         if weights_file:
             self._model.load_weights(weights_file)
 
-        padding = (self.gaussian_kernel_size - 1) / 2
-        self.gaussian_filter = torch.nn.Conv2d(
+        padding = (self._gaussian_kernel_size - 1) // 2
+        self._gaussian_filter = torch.nn.Conv2d(
                 1, 
                 1, 
-                self.gaussian_kernel_size, 
+                self._gaussian_kernel_size, 
                 padding=padding, 
                 bias=False
         )
-        kern = Sector.gaussian_kernel(self.kernel_size, self.segmentation_smoothing_std)
+        kern = Sector.gaussian_kernel(self._gaussian_kernel_size, self._segmentation_smoothing_std)
         kern = kern.reshape((1, 1, kern.shape[0], kern.shape[1]))
-        self.gaussian_filter.weight = torch.Parameter(torch.from_numpy(kern))
+        self._gaussian_filter.weight = torch.nn.Parameter(torch.from_numpy(kern))
+
+
+        if weights_file:
+            model.load_state_dict(torch.load(weights_file))
+
 
     def gaussian_kernel(size, std):
         t = np.linspace(-(size - 1) / 2, (size - 1)/2, size)
@@ -97,30 +98,6 @@ class Sector(nn.Module):
         kernel = np.exp(-0.5 * (x**2 + y**2)/std**2)
 
         return kernel/np.sum(kernel)
-
-    # sentence_embeddings is (time_steps, features)
-    def bemd_segment(self, sentence_embeddings):
-        sentence_embeddings = tf.expand_dims(sentence_embeddings, 0)
-        e_f = self._forward_lstm(sentence_embeddings)
-        e_b = self._backwards_lstm(sentence_embeddings)
-        e_f = tf.squeeze(e_f, 0).numpy()
-        e_b = tf.squeeze(e_b, 0).numpy()
-
-        e_f = gaussian_filter(e_f, self._std)
-        e_b = gaussian_filter(e_b, self._std)
-
-        d_f = np.sum(e_f[1:]*e_f[:-1], axis=1)
-        df /= (np.linalg.norm(e_f[1:], axis=1) * np.linalg.norm(e_f[:-1], axis=1))
-
-        d_b = np.sum(e_b[1:] * e_b[:-1])
-        d_b /= (np.linalg.norm(e_b[1:], axis=1) * np.linalg.norm(e_b[:-1], axis=1))
-
-        # take the geometric mean
-        d = np.sqrt(d_f * d_b)
-
-        segment_edges, _ = find_peaks(d)
-
-        return segment_edges
 
     @staticmethod
     def _batch_pca(e, dim):
@@ -147,14 +124,16 @@ class Sector(nn.Module):
         x_b = self._ln_backwards(x_b)
         x_f = self._squeeze_activation(self._squeeze_layer(x_f))
         x_b = self._squeeze_activation(self._squeeze_layer(x_b))
+
+        x = torch.cat((x_f, x_b), axis=-1)
         x = self._ln_squeeze(x)
         topic_preds = self._topic_layer(x)
         if segment:
-            e_f = Sector._batch_pca(x_f, self.segmentation_space_size)
-            e_b = Sector._batch_pca(x_b, self.segmentation_space_size)
+            e_f = Sector._batch_pca(x_f, self._segmentation_space_size)
+            e_b = Sector._batch_pca(x_b, self._segmentation_space_size)
             with torch.no_grad():
-                e_f = self.gaussian_filter(e_f).squeeze()
-                e_b = self.gaussian_filter(e_b).squeeze()
+                e_f = self._gaussian_filter(e_f).squeeze()
+                e_b = self._gaussian_filter(e_b).squeeze()
 
                 e_f_norms = torch.sqrt(torch.einsum('bsf,bsf->bs', e_f, e_f))
                 e_b_norms = torch.sqrt(torch.einsum('bsf,bsf->bs', e_b, e_b))
@@ -179,6 +158,26 @@ class Sector(nn.Module):
         return topic_preds
 
     @staticmethod
+    def from_train_directory(train_dir):
+        def param_converter(param):
+            try:
+                return int(param)
+            except ValueError:
+                try:
+                    return float(param)
+                except ValueError:
+                    return bool(param)
+
+        with open(train_dir + 'model_params') as f:
+            fin = csv.reader(f)
+            next(fin)
+            params = tuple(map(param_converter, next(fin)))
+        model = Sector(*params)
+        model.load_state_dict(torch.load(train_dir + 'model_weights'))
+
+        return model
+
+    @staticmethod
     def train(model, inputs, validation_data, epochs=1000, weights_file=None):
         if not model._training_model_built:
             self._build_model(training=True, weights_file=weights_file)
@@ -190,70 +189,111 @@ class Sector(nn.Module):
         optim = torch.optim.Adam(model.parameters(), lr=0.001)
 
         with open(checkpoint_dir + 'model_params', 'w') as f:
+            fout = csv.writer(f)
+            fields = (
+                "lstm_size", 
+                "sentence_embedding_size",
+                "topic_embedding_size", 
+                "squeeze_layer_size",
+                "gaussian_kernel_size",
+                "segmentation_space_size",
+                "segmentation_smoothing_std",
+                "multi_topic"
+            )
+
+            values = (
+                    model._lstm_size, 
+                    model._sentence_embedding_size,
+                    model._topic_embedding_size, 
+                    model._squeeze_layer_size,
+                    model._gaussian_kernel_size,
+                    model._segmentation_space_size,
+                    model._segmentation_smoothing_std,
+                    model._multi_topic
+            )
+
+            fout.writerow(fields)
+            fout.writerow(values)
+
+        with open(checkpoint_dir + 'model_params_hr', 'w') as f:
             print("SECTOR("
             "\n\tlstm_size =", model._lstm_size,
             "\n\tsentence_embedding_size =", model._sentence_embedding_size,
-            "\n\tdocument_size =", model._document_size,
             "\n\ttopic_embedding_size =", model._topic_embedding_size,
-            "\n\tbatch_size =", model._batch_size,
             "\n\tsegmentation_space_size =", model._segmentation_space_size,
             "\n\tsegmentation_smoothing_std =", model._segmentation_smoothing_std,
+            "\n\tgaussian_kernel_size = ", model._gaussian_kernel_size,
+            "\n\tsqueeze_layer_size = ", model._squeeze_layer_size,
             "\n\tmulti_topic =", model._multi_topic,
             "\n)",
             file=f)
 
-            accuracies = []
-            val_accuracies = []
-            for epoch in range(epochs):
-                print(f'Epoch {epoch + 1}/{epochs}')
-                losses = []
-                inputs.sampler.generate_document_size()
-                length = len(inputs)
-                batches = tuple(inputs)
-                for i, (sentence_batch, text_batch, topics_batch) in enumerate(batches):
-                    optim.zero_grad()
+        weights_file = checkpoint_dir + 'model_weights'
+        accuracies = []
+        val_accuracies = []
+        epoch_losses = []
+        val_losses = []
+        best_val_accuracy = 0
+        for epoch in range(epochs):
+            print(f'Epoch {epoch + 1}/{epochs}')
+            losses = []
+            inputs.sampler.generate_document_size()
+            length = len(inputs)
+            batches = tuple(inputs)
+            for i, (sentence_batch, text_batch, topics_batch) in enumerate(batches):
+                optim.zero_grad()
+                sentence_batch = sentence_batch.to('cuda')
+                topics_batch = topics_batch.to('cuda')
+                preds = model(sentence_batch, segment=False)
+                preds = preds.view(-1, model._topic_embedding_size)
+                target = topics_batch.view(-1)
+
+                loss = model._loss_fn(preds, target)
+                losses.append(loss)
+
+                print(f'batch {i+1}/{length}: loss: {loss:0.8f}', end='\r')
+                loss.backward()
+                optim.step()
+
+            print(f'average loss: {sum(losses)/len(losses)}')
+            epoch_losses.append((sum(losses)/len(losses)).cpu().detach().numpy())
+            with torch.no_grad():
+                total_correct = 0
+                total = 0
+                for sentence_batch, text_batch, topics_batch in batches:
                     sentence_batch = sentence_batch.to('cuda')
                     topics_batch = topics_batch.to('cuda')
-                    preds = model(sentence_batch)
-                    preds = preds.view(-1, model._topic_embedding_size)
-                    target = topics_batch.view(-1)
+                    preds = torch.argmax(model(sentence_batch, segment=False), dim=-1)
+                    total_correct += torch.sum(preds == topics_batch).cpu().numpy()
+                    total += sentence_batch.shape[0] * sentence_batch.shape[1]
 
-                    loss = model._loss_fn(preds, target)
-                    losses.append(loss)
+            print(f'training accuracy: {total_correct/total}')
+            accuracies.append(total_correct/total)
+            with torch.no_grad():
+                total_correct = 0
+                total = 0
+                validation_data.sampler.generate_document_size()
+                for sentence_batch, text_batch, topics_batch in validation_data:
+                    sentence_batch = sentence_batch.to('cuda')
+                    topics_batch = topics_batch.to('cuda')
+                    preds = torch.argmax(model(sentence_batch, segment=False), dim=-1)
+                    total_correct += torch.sum(preds == topics_batch).cpu().numpy()
+                    total += sentence_batch.shape[0] * sentence_batch.shape[1]
 
-                    print(f'batch {i+1}/{length}: loss: {loss:0.8f}', end='\r')
-                    loss.backward()
-                    optim.step()
-
-                print(f'average loss: {sum(losses)/len(losses)}')
-                with torch.no_grad():
-                    total_correct = 0
-                    total = 0
-                    for sentence_batch, text_batch, topics_batch in batches:
-                        sentence_batch = sentence_batch.to('cuda')
-                        topics_batch = topics_batch.to('cuda')
-                        preds = torch.argmax(model(sentence_batch), dim=-1)
-                        total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                        total += sentence_batch.shape[0] * sentence_batch.shape[1]
-
-                print(f'training accuracy: {total_correct/total}')
-                accuracies.append(total_correct/total)
-                with torch.no_grad():
-                    total_correct = 0
-                    total = 0
-                    validation_data.sampler.generate_document_size()
-                    for sentence_batch, text_batch, topics_batch in validation_data:
-                        sentence_batch = sentence_batch.to('cuda')
-                        topics_batch = topics_batch.to('cuda')
-                        preds = torch.argmax(model(sentence_batch), dim=-1)
-                        total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                        total += sentence_batch.shape[0] * sentence_batch.shape[1]
-
-                print(f'validation accuracy: {total_correct/total}')
-                val_accuracies.append(total_correct/total)
-
+            val_accuracy = total_correct / total
+            print(f'validation accuracy: {val_accuracy}')
+            val_accuracies.append(val_accuracy)
+            if val_accuracy > best_val_accuracy:
+                best_val_accuracy = val_accuracy
+                torch.save(model.state_dict(), weights_file)
 
         print(f'Best Validation Accuracy: {max(val_accuracies)}')
+        history_file = checkpoint_dir + 'history.csv'
+        with open(history_file, 'w') as f:
+            fout = csv.writer(f)
+            for acc, val_acc, loss in zip(accuracies, val_accuracies, epoch_losses):
+                fout.writerow((acc, val_acc, loss))
+
         return model, accuracies, val_accuracies
 
 
