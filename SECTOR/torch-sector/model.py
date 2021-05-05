@@ -3,7 +3,6 @@ import torch.nn as nn
 import numpy as np
 from sklearn.decomposition import PCA
 from scipy.ndimage import gaussian_filter
-from scipy.signal import argrelmax
 import datetime
 import os
 import gc
@@ -272,7 +271,7 @@ class Sector(nn.Module):
                     total += sent_batch.shape[0] * sent_batch.shape[1]
 
             print(f'training accuracy: {total_correct/total}')
-            print(f'training average p_k: {p_k/total}')
+            print(f'training average p_k: {p_k/length}')
             accuracies.append(total_correct/total)
             with torch.no_grad():
                 total_correct = 0
@@ -314,11 +313,12 @@ class Sector(nn.Module):
             p_ks = torch.zeros(seg_ref.shape[0])
             for i, (ref_mbatch, seg_mbatch) in enumerate(zip(seg_ref, seg_hyp)):
                 k = len(ref_mbatch) // ((torch.sum(ref_mbatch) + 1) * 2)
+                k = max(k, 1)
                 d_ref = torch.cumsum(ref_mbatch, dim=-1)
                 d_hyp = torch.cumsum(seg_mbatch, dim=-1)
                 d_ref = d_ref[k:] == d_ref[:-k]
                 d_hyp = d_hyp[k:] == d_hyp[:-k]
-                equiv = d_ref * d_hyp
-                p_ks[i] = torch.sum(equiv) / len(equiv)
+                equiv = d_ref != d_hyp
+                p_ks[i] = torch.sum(equiv).float() / len(equiv)
 
             return p_ks
