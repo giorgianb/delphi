@@ -8,7 +8,7 @@ import string
 from collections import defaultdict
 
 l = WordNetLemmatizer()
-d = enchant.DictWithPWL("en_US", "ee-vocab.txt")
+d = enchant.DictWithPWL("en_US", "technical-vocab.txt")
 PUNCTUATION = set(string.punctuation) | {"–", "”"}
 word_counts = {}
 total_words = 0
