@@ -1,5 +1,8 @@
 # Delphi
-Automatically Generate a Table of Contents for Lecture Videos
+Automatically Generate a Table of Contents for Lecture Videos.
+
+![ESE_441_Poster](https://user-images.githubusercontent.com/11166439/117481306-cdbdef80-af30-11eb-9cf0-0e38b2e60d88.png)
+
 
 ## Usage
 The usage of Delphi is divided into several stages. The first is the training stage, in which Delphi learns how to create table of contents for lecture videos for a course. The first stage involves training Delphi to recognize spoken technical terms in the lecture video, and training Delphi how to assign subjects to sentences.
@@ -54,5 +57,27 @@ The next step is to train Deepspeech in order to recognize the technical terms t
         cd ../
         python3 DeepSpeech.py --train_cudnn --n_hidden 2048 --load_checkpoint_dir pretrained/ -save_checkpoint_dir training/ --epochs 3 --train_files training/train.csv --learning_rate 0.0001
  
- Once training, is completed rename the latest `.pbmm` file and `.scorer` file in the `training` directory to `delphi.pbmm` and `delphi.scorer`.
+ Once training, is completed rename the latest `.pbmm` file and `.scorer` file in the `training` directory to `delphi.pbmm` and `delphi.scorer`. These are the files that will be used to generate transcriptions.
+ 
+ #### SECTOR Training
+Besides from training DeepSpeech to recognize spoken technical terms, *SECTOR* must be trained in order to perform topic classification and segmentation.
+
+##### Generating the Training Data
+The training data to train *SECTOR* is obtained from the PDF of a textbook. For best result, the textbook should be the textbook used in order to teach the course. The textbook PDF must also have a table of contents with *PDF Bookmarks*. A textbook has this sort of table of contents when there are entries in the PDF document viewer that can be clicked in order to automatically arrive at the desired chapter/section. Once a suitable PDF is obtained, it can be used in order to generate the training data for SECTOR using *Apollo*.
+
+First, download Delphi and install the necessary dependencies for *Apollo*:
+
+        git clone https://github.com/giorgianb/delphi
+        cd delphi
+        conda create -n apollo python ipython
+        pip install stanza nltk pyenchant
+        python -c 'import nltk; nltk.download("stopwords"); import stanza; stanza.download("en")
+        
+Now, use Apollo to generate the training data. The argument `course_textbook.pdf` is the path to the textbook used for the course, and `data.csv` is the path to the CSV file that will hold the training data. This path is important as it will be used later.
+
+       bin/apollo.sh course_textbook.pdf data.csv
+       
+
+
+
  
