@@ -33,11 +33,13 @@ We assume that you have [conda](https://www.anaconda.com/products/individual) in
     
     make Dockerfile.train
     
-    # Create a directory for training and move necessary files/folders into it.
+    # Create directories for training and move necessary files/folders into it.
+    mkdir pretrained
+    mv../deepspeech-0.9.3-models.pbmm pretrained/
+    mv../deepspeech-0.9.3-models.scorer pretrained/
+    
     mkdir training
     cd training
-    mv ../../deepspeech-0.9.3-models.pbmm .
-    mv ../../deepspeech-0.9.3-models.scorer .
     
     
 ###### Training DeepSpeech
@@ -50,5 +52,7 @@ The next step is to train Deepspeech in order to recognize the technical terms t
  Once `train.csv` is created in the `training/` folder, run the following command to train `DeepSpeech`:
  
         cd ../
-        python3 DeepSpeech.py --train_cudnn --n_hidden 2048 --checkpoint_dir training/ --epochs 3 --train_files training/train.csv --learning_rate 0.0001
+        python3 DeepSpeech.py --train_cudnn --n_hidden 2048 --load_checkpoint_dir pretrained/ -save_checkpoint_dir training/ --epochs 3 --train_files training/train.csv --learning_rate 0.0001
+ 
+ Once training, is completed rename the latest `.pbmm` file and `.scorer` file in the `training` directory to `delphi.pbmm` and `delphi.scorer`.
  
