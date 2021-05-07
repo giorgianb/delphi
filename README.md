@@ -71,7 +71,7 @@ First, download Delphi and install the necessary dependencies for *Apollo*:
         cd delphi
         conda create -n apollo python ipython
         pip install stanza nltk pyenchant
-        python -c 'import nltk; nltk.download("stopwords"); import stanza; stanza.download("en")
+        python -c 'import nltk; nltk.download("stopwords"); nltk.download("wordnet"); import stanza; stanza.download("en")'
         
 Now, use Apollo to generate the training data. The argument `course_textbook.pdf` is the path to the textbook used for the course, and `data.csv` is the path to the CSV file that will hold the training data. This path is important as it will be used later.
 
