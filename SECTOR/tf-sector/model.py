@@ -75,17 +75,19 @@ class Sector:
                     document_size,
                     self._sentence_embedding_size
                     ],
-                merge_mode='sum'
+                merge_mode='concat'
         )
 
         act = 'sigmoid' if self._multi_topic else 'softmax'
         self._topic_layer = tf.keras.layers.Dense(self._topic_embedding_size, activation=act)
+        self._bottleneck_layer = tf.keras.layers.Dense(128, activation='tanh')
 
         self._model = tf.keras.models.Sequential((
             tf.keras.layers.Masking(dtype=float),
             tf.keras.layers.LayerNormalization(dtype=float),
             self._bi_lstm,
             tf.keras.layers.LayerNormalization(dtype=float),
+            self._bottleneck_layer,
             self._topic_layer
         ))
 
@@ -140,7 +142,7 @@ class Sector:
                     monitor='val_accuracy', 
                     mode='max',
                     min_delta=0.0,
-                    patience=15,
+                    patience=50,
                     verbose=True,
                     restore_best_weights=True
             )
@@ -148,7 +150,7 @@ class Sector:
                     inputs, 
                     epochs=epochs, 
                     validation_data=validation_data, 
-                    callbacks=[cp_callback, gc_callback]
+                    callbacks=[cp_callback, es_callback]
             )
 
 

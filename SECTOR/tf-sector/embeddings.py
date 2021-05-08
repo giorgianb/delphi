@@ -13,7 +13,7 @@ import nltk.corpus
 Word = str
 Sentence = Tuple[Word]
 STOP_WORDS = set(nltk.corpus.stopwords.words('english'))
-nlp = stanza.Pipeline('en', processors='tokenize,lemma')
+nlp = stanza.Pipeline('en', processors='tokenize,lemma', use_gpu=False)
 def preprocess(sentences):
     doc = nlp(sentences)
     sentences = [[word.lemma for word in sent.words if word.lemma not in STOP_WORDS] 
