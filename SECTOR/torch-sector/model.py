@@ -51,7 +51,12 @@ class Sector(nn.Module):
                 hidden_size=self._lstm_size,
         )
 
-        self._squeeze_layer = nn.Linear(
+        self._squeeze_layer_f = nn.Linear(
+                self._lstm_size,
+                self._squeeze_layer_size
+        )
+
+        self._squeeze_layer_b = nn.Linear(
                 self._lstm_size,
                 self._squeeze_layer_size
         )
@@ -116,8 +121,8 @@ class Sector(nn.Module):
 
         x_f = self._ln_forward(x_f)
         x_b = self._ln_backwards(x_b)
-        x_f = self._squeeze_activation(self._squeeze_layer(x_f))
-        x_b = self._squeeze_activation(self._squeeze_layer(x_b))
+        x_f = self._squeeze_activation(self._squeeze_layer_f(x_f))
+        x_b = self._squeeze_activation(self._squeeze_layer_b(x_b))
 
         x = torch.cat((x_f, x_b), axis=-1)
         x = self._ln_squeeze(x)
@@ -185,7 +190,7 @@ class Sector(nn.Module):
         checkpoint_dir = CHECKPOINT_DIR_TEMPLATE.format(cur_time)
         os.mkdir(checkpoint_dir)
         model = model.to('cuda:0')
-        optim = torch.optim.Adam(model.parameters(), lr=0.001)
+        optim = torch.optim.Adam(model.parameters(), lr=0.002)
 
         with open(checkpoint_dir + 'model_params', 'w') as f:
             fout = csv.writer(f)
@@ -234,83 +239,157 @@ class Sector(nn.Module):
         epoch_losses = []
         val_losses = []
         best_val_accuracy = 0
-        for epoch in range(epochs):
-            print(f'Epoch {epoch + 1}/{epochs}')
-            losses = []
-            inputs.sampler.generate_document_size()
+        try:
+            for epoch in range(epochs):
+                if (epoch + 1) == 10:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.001
+                elif (epoch + 1) == 20:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.002
+                elif (epoch + 1) == 30:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.002
+                elif (epoch + 1) == 32:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.001
+                elif (epoch + 1) == 40:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.0001
+                elif (epoch + 1) == 50:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.002
+                elif (epoch + 1) == 60:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.001
+                elif (epoch + 1) == 90:
+                    for group in optim.param_groups:
+                        group['lr'] = 0.0001
+
+                print(f'Epoch {epoch + 1}/{epochs}')
+                losses = []
+                inputs.sampler.generate_document_size()
+                length = len(inputs)
+                batches = tuple(inputs)
+                for i, (sent_batch, text_batch, topics_batch, trans_batch) in enumerate(batches):
+                    optim.zero_grad()
+                    sent_batch = sent_batch.to('cuda')
+                    topics_batch = topics_batch.to('cuda')
+                    preds = model(sent_batch, segment=False)
+                    preds = preds.view(-1, model._topic_embedding_size)
+                    target = topics_batch.view(-1)
+
+                    loss = model._loss_fn(preds, target)
+                    losses.append(loss)
+
+                    print(f'batch {i+1}/{length}: loss: {loss:0.8f}', end='\r')
+                    loss.backward()
+                    optim.step()
+
+                print(f'average loss: {sum(losses)/len(losses)}')
+                epoch_losses.append((sum(losses)/len(losses)).cpu().detach().numpy())
+                with torch.no_grad():
+                    total_correct = 0
+                    total = 0
+                    p_k = 0
+                    inputs.sampler.set_document_size(
+                            max(inputs.sampler.document_size, 3)
+                    )
+                    for sent_batch, text_batch, topics_batch, trans_batch in inputs:
+                        sent_batch = sent_batch.to('cuda')
+                        topics_batch = topics_batch.to('cuda')
+                        preds, segs = model(sent_batch)
+                        preds = torch.argmax(preds, dim=-1)
+                        p_k += torch.mean(model.compute_p_k(trans_batch, segs))
+                        total_correct += torch.sum(preds == topics_batch).cpu().numpy()
+                        total += sent_batch.shape[0] * sent_batch.shape[1]
+
+                print(f'training accuracy: {total_correct/total}')
+                print(f'training average p_k: {p_k/length}')
+                accuracies.append(total_correct/total)
+                with torch.no_grad():
+                    total_correct = 0
+                    total = 0
+                    validation_data.sampler.generate_document_size()
+                    p_ks = []
+                    validation_data.sampler.set_document_size(
+                            max(validation_data.sampler.document_size, 3)
+                    )
+
+                    for sent_batch, text_batch, topics_batch, trans_batch in validation_data:
+                        sent_batch = sent_batch.to('cuda')
+                        topics_batch = topics_batch.to('cuda')
+                        preds, segs = model(sent_batch)
+                        preds = torch.argmax(preds, dim=-1)
+                        total_correct += torch.sum(preds == topics_batch).cpu().numpy()
+                        total += sent_batch.shape[0] * sent_batch.shape[1]
+                        p_k = model.compute_p_k(trans_batch, segs)
+                        p_ks.append(torch.mean(p_k).detach().cpu().numpy())
+
+                val_p_k = sum(p_ks)/len(p_ks)
+                val_accuracy = total_correct / total
+                print(f'validation accuracy: {val_accuracy}')
+                print(f'validation average p_k: {val_p_k}')
+                val_accuracies.append(val_accuracy)
+                val_p_ks.append(val_p_k)
+                if val_accuracy > best_val_accuracy:
+                    best_val_accuracy = val_accuracy
+                    torch.save(model.state_dict(), weights_file)
+
+        finally:
+            print(f'Best Validation Accuracy: {max(val_accuracies)}')
+            history_file = checkpoint_dir + 'history.csv'
+            with open(history_file, 'w') as f:
+                fout = csv.writer(f)
+                for acc, val_acc, p_k, loss in zip(accuracies, val_accuracies, val_p_ks, epoch_losses):
+                    fout.writerow((acc, val_acc, p_k, loss))
+
+            model.calibrate_segmentation_std(inputs, validation_data)
+
+            return model, accuracies, val_accuracies
+
+    def calibrate_segmentation_std(self, inputs, validation_data, pow_min=-5, pow_max=25, base=1.5):
+        inputs.sampler.set_document_size(256)
+        validation_data.sampler.set_document_size(256)
+        with torch.no_grad():
+            best_p_k = 1
+            best_std = None
             length = len(inputs)
             batches = tuple(inputs)
-            for i, (sent_batch, text_batch, topics_batch, trans_batch) in enumerate(batches):
-                optim.zero_grad()
-                sent_batch = sent_batch.to('cuda')
-                topics_batch = topics_batch.to('cuda')
-                preds = model(sent_batch, segment=False)
-                preds = preds.view(-1, model._topic_embedding_size)
-                target = topics_batch.view(-1)
-
-                loss = model._loss_fn(preds, target)
-                losses.append(loss)
-
-                print(f'batch {i+1}/{length}: loss: {loss:0.8f}', end='\r')
-                loss.backward()
-                optim.step()
-
-            print(f'average loss: {sum(losses)/len(losses)}')
-            epoch_losses.append((sum(losses)/len(losses)).cpu().detach().numpy())
-            with torch.no_grad():
-                total_correct = 0
-                total = 0
+            for power in range(pow_min, pow_max + 1):
+                std = base**power
+                kern = Sector.gaussian_kernel(self._gaussian_kernel_size, std)
+                kern = kern.reshape((1, 1, kern.shape[0], kern.shape[1]))
+                self._gaussian_filter.weight = torch.nn.Parameter(torch.from_numpy(kern).to('cuda'))
                 p_k = 0
                 for sent_batch, text_batch, topics_batch, trans_batch in batches:
                     sent_batch = sent_batch.to('cuda')
                     topics_batch = topics_batch.to('cuda')
-                    preds, segs = model(sent_batch)
-                    preds = torch.argmax(preds, dim=-1)
-                    p_k += torch.mean(model.compute_p_k(trans_batch, segs))
-                    total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                    total += sent_batch.shape[0] * sent_batch.shape[1]
+                    preds, segs = self(sent_batch)
+                    p_k += torch.mean(self.compute_p_k(trans_batch, segs))
 
-            print(f'training accuracy: {total_correct/total}')
-            print(f'training average p_k: {p_k/length}')
-            accuracies.append(total_correct/total)
-            with torch.no_grad():
-                total_correct = 0
-                total = 0
-                validation_data.sampler.generate_document_size()
-                p_ks = []
-                for sent_batch, text_batch, topics_batch, trans_batch in validation_data:
-                    sent_batch = sent_batch.to('cuda')
-                    topics_batch = topics_batch.to('cuda')
-                    preds, segs = model(sent_batch)
-                    preds = torch.argmax(preds, dim=-1)
-                    total_correct += torch.sum(preds == topics_batch).cpu().numpy()
-                    total += sent_batch.shape[0] * sent_batch.shape[1]
-                    p_k = model.compute_p_k(trans_batch, segs)
-                    p_ks.append(torch.mean(p_k))
+                p_k /= len(inputs)
+                if p_k > best_p_k:
+                    best_p_k = p_k
+                    best_std = std
 
-            val_p_k = sum(p_ks)/len(p_ks)
-            val_accuracy = total_correct / total
-            print(f'validation accuracy: {val_accuracy}')
-            print(f'validation average p_k: {val_p_k}')
-            val_accuracies.append(val_accuracy)
-            val_p_ks.append(val_p_k)
-            if val_accuracy > best_val_accuracy:
-                best_val_accuracy = val_accuracy
-                torch.save(model.state_dict(), weights_file)
+            p_ks = []
+            for sent_batch, text_batch, topics_batch, trans_batch in validation_data:
+                sent_batch = sent_batch.to('cuda')
+                preds, segs = self(sent_batch)
+                p_k = self.compute_p_k(trans_batch, segs)
+                p_ks.append(torch.mean(p_k))
 
-        print(f'Best Validation Accuracy: {max(val_accuracies)}')
-        history_file = checkpoint_dir + 'history.csv'
-        with open(history_file, 'w') as f:
-            fout = csv.writer(f)
-            for acc, val_acc, p_k, loss in zip(accuracies, val_accuracies, val_p_ks, epoch_losses):
-                fout.writerow((acc, val_acc, p_k, loss))
+            print(f'validation p_k using best training std: {sum(p_ks)/len(p_ks)}')
+        self._segmentation_smoothing_std = best_std
 
-        return model, accuracies, val_accuracies
+        return best_std
 
     @staticmethod
     def compute_p_k(seg_ref, seg_hyp):
         with torch.no_grad():
             p_ks = torch.zeros(seg_ref.shape[0])
+            k = (torch.sum(seg_ref) + 1)
             for i, (ref_mbatch, seg_mbatch) in enumerate(zip(seg_ref, seg_hyp)):
                 k = len(ref_mbatch) // ((torch.sum(ref_mbatch) + 1) * 2)
                 k = max(k, 1)

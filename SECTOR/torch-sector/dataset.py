@@ -54,6 +54,13 @@ class TopicBatchSampler(Sampler):
     def generate_document_size(self):
         self._document_size = random.randint(self.min_document_size, self.max_document_size + 1)
 
+    @property
+    def document_size(self):
+        return self._document_size
+
+    def set_document_size(self, size):
+        self._document_size = size
+
     def __len__(self):
         return int(math.floor(self._total / self._document_size))
 
@@ -73,7 +80,6 @@ class TopicBatchSampler(Sampler):
                 (fi[i:i + ds] for i in range(0, len(fi), ds))
         )
         return documents
-
 
 def chunks(lst, n):
     return (lst[i:i + n] for i in range(0, len(lst), n))
@@ -161,7 +167,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=1, random_state=42, 
     )
     batch_sampler = TopicBatchSampler(
             dataset.group_lengths, 
-            1,
+            5,
             384,
     )
 
@@ -172,7 +178,7 @@ def make_dataset(data, processor, test_size=0.2, batch_size=1, random_state=42, 
     )
     train_batch_sampler = TopicBatchSampler(
             train_dataset.group_lengths, 
-            1,
+            5,
             384,
     )
 
@@ -220,7 +226,6 @@ def make_dataset(data, processor, test_size=0.2, batch_size=1, random_state=42, 
 
 DATA_FILE = "micro-data.csv"
 
-
 with open(DATA_FILE) as f:
     data = list(csv.reader(f))
     titles = (row[0] for row in data)
@@ -247,7 +252,7 @@ DATA_TOPICS = {
     "Discrete and Integrated Circuits",
     "Analog and Digital Signals",
     "Notation",
-    "Summary",
+#    "Summary",
     "PART 1: SEMICONDUCTOR DEVICES AND BASIC APPLICATIONS",
     "Chapter 1: Semiconductor Materials and Diodes",
     "Preview",
@@ -257,7 +262,7 @@ DATA_TOPICS = {
     "1.4 Diode Circuits: AC Equivalent Circuit",
     "1.5 Other Diode Types",
     "1.6 Design Application: Diode Thermometer",
-    "1.7 Summary",
+#    "1.7 Summary",
     "Chapter 2: Diode Circuits",
     "2.1 Rectifier Circuits",
     "2.2 Zener Diode Circuits",
@@ -265,7 +270,7 @@ DATA_TOPICS = {
     "2.4 Multiple-Diode Circuits",
     "2.5 Photodiode and LED Circuits",
     "2.6 Design Application: DC Power Supply",
-    "2.7 Summary",
+    #"2.7 Summary",
     "Chapter 3: The Field-Effect Transistor",
     "3.1 MOS Field-Effect Transistor",
     "3.2 MOSFET DC Circuit Analysis",
@@ -274,7 +279,7 @@ DATA_TOPICS = {
     "3.5 Multistage MOSFET Circuits",
     "3.6 Junction Field-Effect Transistor",
     "3.7 Design Application: Diode Thermometer with an MOS Transistor",
-    "3.8 Summary",
+#    "3.8 Summary",
     "Chapter 4: Basic FET Amplifiers",
     "4.1 The MOSFET Amplifier",
     "4.2 Basic Transistor Amplifier Configurations",
@@ -286,7 +291,7 @@ DATA_TOPICS = {
     "4.8 Multistage Amplifiers",
     "4.9 Basic JFET Amplifiers",
     "4.10 Design Application: A Two-Stage Amplifier",
-    "4.11 Summary",
+#    "4.11 Summary",
     "Chapter 5: The Bipolar Junction Transistor",
     "5.1 Basic Bipolar Junction Transistor",
     "5.2 DC Analysis of Transistor Circuits",
@@ -294,7 +299,7 @@ DATA_TOPICS = {
     "5.4 Bipolar Transistor Biasing",
     "5.5 Multistage Circuits",
     "5.6 Design Application: Diode Thermometer with a Bipolar Transistor",
-    "5.7 Summary",
+    #"5.7 Summary",
     "Chapter 6: Basic BJT Amplifiers",
     "6.1 Analog Signals and Linear Amplifiers",
     "6.2 The Bipolar Linear Amplifier",
@@ -307,7 +312,7 @@ DATA_TOPICS = {
     "6.9 Multistage Amplifiers",
     "6.10 Power Considerations",
     "6.11 Design Application: Audio Amplifier",
-    "6.12 Summary",
+#    "6.12 Summary",
     "Chapter 7: Frequency Response",
     "7.1 Amplifier Frequency Response",
     "7.2 System Transfer Functions",
@@ -316,7 +321,7 @@ DATA_TOPICS = {
     "7.5 Frequency Response: The FET",
     "7.6 High-Frequency Response of Transistor Circuits",
     "7.7 Design Application: A Two-Stage Amplifier with Coupling Capacitors",
-    "7.8 Summary",
+#    "7.8 Summary",
     "Chapter 8: Output Stages and Power Amplifiers",
     "8.1 Power Amplifiers",
     "8.2 Power Transistors",
@@ -324,7 +329,7 @@ DATA_TOPICS = {
     "8.4 Class-A Power Amplifiers",
     "8.5 Class-AB Push–Pull Complementary Output Stages",
     "8.6 Design Application: An Output Stage Using MOSFETs",
-    "8.7 Summary",
+#    "8.7 Summary",
     "PROLOGUE II: PROLOGUE TO ELECTRONIC DESIGN",
     "Design Approach",
     "System Design",
@@ -340,14 +345,14 @@ DATA_TOPICS = {
     "9.6 Operational Transconductance Amplifiers",
     "9.7 Op-Amp Circuit Design",
     "9.8 Design Application: Electronic Thermometer with an Instrumentation Amplifier",
-    "9.9 Summary",
+#    "9.9 Summary",
     "Chapter 10: Integrated Circuit Biasing and Active Loads",
     "10.1 Bipolar Transistor Current Sources",
     "10.2 FET Current Sources",
     "10.3 Circuits with Active Loads",
     "10.4 Small-Signal Analysis: Active Load Circuits",
     "10.5 Design Application: An NMOS Current Source",
-    "10.6 Summary",
+#    "10.6 Summary",
     "Chapter 11: Differential and Multistage Amplifiers",
     "11.1 The Differential Amplifier",
     "11.2 Basic BJT Differential Pair",
@@ -358,7 +363,7 @@ DATA_TOPICS = {
     "11.7 Simplified BJT Operational Amplifier Circuit",
     "11.8 Diff-Amp Frequency Response",
     "11.9 Design Application: A CMOS Diff-Amp",
-    "11.10 Summary",
+#    "11.10 Summary",
     "Chapter 12: Feedback and Stability",
     "12.1 Introduction to Feedback",
     "12.2 Basic Feedback Concepts",
@@ -371,7 +376,7 @@ DATA_TOPICS = {
     "12.9 Stability of the Feedback Circuit",
     "12.10 Frequency Compensation",
     "12.11 Design Application: A MOSFET Feedback Circuit",
-    "12.12 Summary",
+#    "12.12 Summary",
     "Chapter 13: Operational Amplifier Circuits",
     "13.1 General Op-Amp Circuit Design",
     "13.2 A Bipolar Operational Amplifier Circuit",
@@ -379,7 +384,7 @@ DATA_TOPICS = {
     "13.4 BiCMOS Operational Amplifier Circuits",
     "13.5 JFET Operational Amplifier Circuits",
     "13.6 Design Application: A Two-Stage CMOS Op-Amp to Match a Given Output Stage",
-    "13.7 Summary",
+#    "13.7 Summary",
     "Chapter 14: Nonideal Effects in Operational Amplifier Circuits",
     "14.1 Practical Op-Amp Parameters",
     "14.2 Finite Open-Loop Gain",
@@ -388,7 +393,7 @@ DATA_TOPICS = {
     "14.5 Input Bias Current",
     "14.6 Additional Nonideal Effects",
     "14.7 Design Application: An Offset Voltage Compensation Network",
-    "14.8 Summary",
+    #"14.8 Summary",
     "Chapter 15: Applications and Design of Integrated Circuits",
     "15.1 Active Filters",
     "15.2 Oscillators",
@@ -397,7 +402,7 @@ DATA_TOPICS = {
     "15.5 Integrated Circuit Power Amplifiers",
     "15.6 Voltage Regulators",
     "15.7 Design Application: An Active Bandpass Filter",
-    "15.8 Summary",
+#    "15.8 Summary",
     "PROLOGUE III: PROLOGUE TO DIGITAL ELECTRONICS",
     "Logic Functions and Logic Gates",
     "Logic Levels",
@@ -417,7 +422,7 @@ DATA_TOPICS = {
     "16.10 Read-Only Memory",
     "16.11 Data Converters",
     "16.12 Design Application: A Static CMOS Logic Gate",
-    "16.13 Summary",
+#    "16.13 Summary",
     "Chapter 17: Bipolar Digital Circuits",
     "17.1 Emitter-Coupled Logic (ECL)",
     "17.2 Modified ECL Circuit Configurations",
@@ -425,6 +430,6 @@ DATA_TOPICS = {
     "17.4 Schottky Transistor–Transistor Logic",
     "17.5 BiCMOS Digital Circuits",
     "17.6 Design Application: A Static ECL Gate",
-    "17.7 Summary",
+#    "17.7 Summary",
 }
     
